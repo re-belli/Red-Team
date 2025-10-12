@@ -24,7 +24,7 @@ $client.Close()
 ```
 
 ```bash
-# Linux listneer
+# Linux listener
 nc -l -p 5555 > test.txt
 ```
 
