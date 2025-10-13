@@ -10,6 +10,9 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\
 
 # Windows Notes
 
+## Windows ISOs
+https://uupdump.net/
+
 ## AD Commands
 ```ps
 # AS-REP
