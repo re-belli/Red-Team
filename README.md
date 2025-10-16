@@ -15,7 +15,7 @@
 <table>
   <tr><td><b>LinkedIn</b></td><td><b>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</b></td></tr>
   <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or <lastname><first_initial><second_initial>@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
-  <tr><td>Targeting/td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
+  <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
 </table>
 
 ---
@@ -35,7 +35,7 @@
   <tr>
     <td>Excel</td>
     <td>
-      <a href="https://github.com/mttaggart/xllrs" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a>
+      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a>
     </td>
     </tr>
     <tr>
