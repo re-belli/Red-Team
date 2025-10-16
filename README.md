@@ -44,6 +44,14 @@
       <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">Dracula VS Code plugin was trojanized previously</a>
     </td>
     </tr>
+    <tr>
+    <td>WAF</td>
+    <td>
+      <a href="https://github.com/botesjuan/Obfuscating-Techniques-WAF-Bypass" target="_blank">Obfuscation Tricks</a>
+      <a href="https://blog.sicuranext.com/modsecurity-path-confusion-bugs-bypass/" target="_blank">Path Confusion</a>
+      <a href="https://medium.com/@honze_net/vulnhub-minu-1-write-up-8032fdda5939" target="_blank">URL Encoding</a>
+    </td>
+    </tr>
 </table>
 
 ---
