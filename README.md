@@ -32,8 +32,8 @@
     </td>
   </tr>
   <tr><td>MOTW bypass</td><td>tar.gz, CVE-2025-31334 - WinRar, CVE-2025-0411 - 7-zip</td></tr>
-  <tr><td>Excel</td><td><a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a></td></tr>
-  <tr><td>Supply Chain</td><td>Dracula VS Code plugin was trojanized previously, <a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank"></td></tr>
+  <tr><td>Excel</td><td><a href="https://github.com/mttaggart/xllrs" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a></td></tr>
+  <tr><td>Supply Chain</td><td>Dracula VS Code plugin was trojanized previously, <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank"></td></tr>
 </table>
 
 ---
