@@ -13,7 +13,7 @@
 ## HUMINT Collection
 
 <table>
-  <tr><td><b>LinkedIn</b></td><td><b>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</b></td></tr>
+  <tr><td>LinkedIn</td><td>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
   <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or <lastname><first_initial><second_initial>@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
   <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
 </table>
@@ -47,8 +47,8 @@
     <tr>
     <td>WAF</td>
     <td>
-      <a href="https://github.com/botesjuan/Obfuscating-Techniques-WAF-Bypass" target="_blank">Obfuscation Tricks</a>
-      <a href="https://blog.sicuranext.com/modsecurity-path-confusion-bugs-bypass/" target="_blank">Path Confusion</a>
+      <a href="https://github.com/botesjuan/Obfuscating-Techniques-WAF-Bypass" target="_blank">Obfuscation Tricks</a>, 
+      <a href="https://blog.sicuranext.com/modsecurity-path-confusion-bugs-bypass/" target="_blank">Path Confusion</a>, 
       <a href="https://medium.com/@honze_net/vulnhub-minu-1-write-up-8032fdda5939" target="_blank">URL Encoding</a>
     </td>
     </tr>
