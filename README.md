@@ -1,232 +1,81 @@
-# Offensive security notes and ramblings, be adviced hot takes ahead.
+# Offensive Security Notes: Unredacted  
+**Be advised: hot takes ahead. These are the things people don’t say out loud.**
 
-- [Reconnaissance](#reconnaissance)
-- [Initial Access](#initial-access)
-- [Command & Control](#command--control)
-- [Defense Evasion](#defense-evasion)
-- [Persistence](#persistence)
-- [Privilege Escalation](#privilege-escalation)
-- [Credential Access](#credential-access)
-- [Lateral Movement](#lateral-movement)
-- [Collection](#collection)
-- [Exfiltration](#exfiltration)
+- [OSINT](#osint)  
+- [Initial Access](#initial-access)  
+- [Command & Control](#command--control)  
+- [Credential Access](#credential-access)  
+- [Lateral Movement](#lateral-movement)  
+- [Privilege Escalation](#privilege-escalation)  
 
 ---
 
-## Reconnaissance
+## HUMINT Collection
 
-### Passive Recon
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>example/passive-tool</td><td>placeholder notes</td></tr>
-</table>
-
-### Active Recon
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>example/active-tool</td><td>placeholder notes</td></tr>
-</table>
-
-### OPSEC / Target Profiling
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>profiles</td><td>placeholder notes</td></tr>
+  <tr><td><b>LinkedIn</b></td><td><b>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</b></td></tr>
+  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or <lastname><first_initial><second_initial>@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
+  <tr><td>Targeting/td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
 </table>
 
 ---
 
 ## Initial Access
 
-### Phishing / Social Engineering
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>templates</td><td>placeholder notes</td></tr>
-</table>
-
-### Web / App Exploits
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>vuln-scanner</td><td>placeholder notes</td></tr>
-</table>
-
-### Supply-Chain / Third-Party
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>third-party</td><td>placeholder notes</td></tr>
+    <tr>
+    <td><b>Phishing/Smishing</b></td>
+    <td>
+      <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a>,  
+      <a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank">SpecterOps: Phish Sticks</a>
+      Most companies don't give all employess second phones, but have them use their personal phone.  
+    </td>
+  </tr>
+  <tr><td>MOTW bypass</td><td>tar.gz, CVE-2025-31334 - WinRar, CVE-2025-0411 - 7-zip</td></tr>
+  <tr><td>Excel</td><td><a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a></td></tr>
+  <tr><td>Supply Chain</td><td>Dracula VS Code plugin was trojanized previously, <a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank"></td></tr>
 </table>
 
 ---
 
 ## Command & Control
 
-### Beaconing & Channels
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>beacon-profiles</td><td>placeholder notes</td></tr>
-</table>
-
-### Frameworks & Tooling
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>framework</td><td>placeholder notes</td></tr>
-</table>
-
-### Testing / Lab Setup
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>lab-config</td><td>placeholder notes</td></tr>
-</table>
-
----
-
-## Defense Evasion
-
-### Obfuscation & Packing
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>obfuscator</td><td>placeholder notes</td></tr>
-</table>
-
-### Artifact Cleanup
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>cleanup-scripts</td><td>placeholder notes</td></tr>
-</table>
-
-### Anti-Forensics / Detection Avoidance
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>tactics</td><td>placeholder notes</td></tr>
-</table>
-
----
-
-## Persistence
-
-### Scheduled Tasks & Services
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>svc-schedules</td><td>placeholder notes</td></tr>
-</table>
-
-### Registry / Boot Mechanisms
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>registry-keys</td><td>placeholder notes</td></tr>
-</table>
-
-### Cloud & Identity Persistence
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>cloud-roles</td><td>placeholder notes</td></tr>
-</table>
-
----
-
-## Privilege Escalation
-
-### Local Exploits / Misconfigs
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>local-vuln</td><td>placeholder notes</td></tr>
-</table>
-
-### Credential Abuse
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>token-theft</td><td>placeholder notes</td></tr>
-</table>
-
-### Sudo / Service Misuse
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>service-config</td><td>placeholder notes</td></tr>
+  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
+  <tr><td>Beacon Profiles</td><td>Low-and-slow configs, jitter tuning, domain fronting tricks</td></tr>
+  <tr><td>Frameworks & Custom Tooling</td><td>Cobalt Strike, Sliver, custom implants, OPSEC-safe builds</td></tr>
+  <tr><td>Infrastructure Setup</td><td>Redirectors, staging servers, domain blending, TLS fingerprinting</td></tr>
 </table>
 
 ---
 
 ## Credential Access
 
-### Password Harvesting
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>dump-tools</td><td>placeholder notes</td></tr>
-</table>
-
-### Key / Token Theft
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>ssh-keys</td><td>placeholder notes</td></tr>
-</table>
-
-### MFA / SSO Bypass Attempts
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>mfa-bypass</td><td>placeholder notes</td></tr>
+  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
+  <tr><td>Password Dumping</td><td>LSASS scraping, memory inspection, offline SAM parsing</td></tr>
+  <tr><td>Token Theft / Abuse</td><td>Impersonation, delegation tokens, S4U abuse, golden tickets</td></tr>
+  <tr><td>MFA / SSO Bypass</td><td>Push fatigue, token replay, OAuth abuse, conditional access gaps</td></tr>
 </table>
 
 ---
 
 ## Lateral Movement
 
-### Remote Exec & SMB
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>ps-remoting</td><td>placeholder notes</td></tr>
-</table>
-
-### Credential Reuse / Pass-the-Hash
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>pth</td><td>placeholder notes</td></tr>
-</table>
-
-### AD / Identity-based Movement
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>ad-tools</td><td>placeholder notes</td></tr>
+  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
+  <tr><td>Remote Execution</td><td>WMI, PSRemoting, scheduled tasks, service creation</td></tr>
+  <tr><td>Credential Reuse</td><td>Pass-the-Hash, Pass-the-Ticket, Kerberoasting, plaintext creds</td></tr>
+  <tr><td>AD / Identity Abuse</td><td>ACL abuse, shadow admin paths, group membership manipulation</td></tr>
 </table>
 
 ---
 
-## Collection
+## Privilege Escalation
 
-### Host Forensics & Artifact Collection
 <table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>collection-scripts</td><td>placeholder notes</td></tr>
-</table>
-
-### Data Staging & Aggregation
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>staging-area</td><td>placeholder notes</td></tr>
-</table>
-
-### Sensitive Data Identification
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>PII-lists</td><td>placeholder notes</td></tr>
-</table>
-
----
-
-## Exfiltration
-
-### Network Egress Techniques
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>tunneling</td><td>placeholder notes</td></tr>
-</table>
-
-### Storage / Cloud Exfil
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>cloud-buckets</td><td>placeholder notes</td></tr>
-</table>
-
-### Steganography / Covert Channels
-<table>
-  <tr><td><b>Category</b></td><td><b>Notes</b></td></tr>
-  <tr><td>stego</td><td>placeholder notes</td></tr>
+  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
+  <tr><td>Local Exploits</td><td>Kernel bugs, DLL hijacking, vulnerable drivers, CVE chaining</td></tr>
+  <tr><td>Misconfigurations</td><td>Unquoted service paths, writable directories, insecure permissions</td></tr>
+  <tr><td>Token / Role Abuse</td><td>Privileged token impersonation, cloud role escalation, SID history tricks</td></tr>
 </table>
