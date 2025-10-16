@@ -13,9 +13,9 @@
 ## HUMINT Collection
 
 <table>
-  <tr><td>LinkedIn</</td><td>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
-  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or lastname*firstinitial*secondinitial@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
-  <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
+  <tr><td><b>LinkedIn</b></td><td><b>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</b></td></tr>
+  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or <lastname><first_initial><second_initial>@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
+  <tr><td>Targeting/td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll decide the proper way to word this later, since the real-world way this works would offend POGs and desk-job folks who’ve never done ground or in-person recon.</td></tr>
 </table>
 
 ---
@@ -24,16 +24,26 @@
 
 <table>
     <tr>
-    <td><b>Phishing/Smishing</b></td>
+    <td>Phishing/Smishing</td>
     <td>
       <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a>,  
       <a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank">SpecterOps: Phish Sticks</a>
       Most companies don't give all employess second phones, but have them use their personal phone.  
     </td>
-  </tr>
+    </tr>
   <tr><td>MOTW bypass</td><td>tar.gz, CVE-2025-31334 - WinRar, CVE-2025-0411 - 7-zip</td></tr>
-  <tr><td>Excel</td><td><a href="https://github.com/mttaggart/xllrs" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a></td></tr>
-  <tr><td>Supply Chain</td><td>Dracula VS Code plugin was trojanized previously, <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank"></td></tr>
+  <tr>
+    <td>Excel</td>
+    <td>
+      <a href="https://github.com/mttaggart/xllrs" target="_blank">Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a>
+    </td>
+    </tr>
+    <tr>
+    <td>Supply Chain</td>
+    <td>
+      <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">Dracula VS Code plugin was trojanized previously</a>
+    </td>
+    </tr>
 </table>
 
 ---
