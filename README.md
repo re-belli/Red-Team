@@ -2,6 +2,7 @@
 **Be advised: hot takes ahead. These are the things people don’t say out loud.**
 
 - [OSINT](#osint)  
+- [External Recon](#external-recon)  
 - [Initial Access](#initial-access)  
 - [Command & Control](#command--control)  
 - [Credential Access](#credential-access)  
@@ -19,6 +20,37 @@
 </table>
 
 ---
+
+## External Recon
+
+<table>
+  <tr>
+    <td><b>LinkedIn</b></td>
+    <td>
+      <pre><code>sudo ngrep -i -d &lt;network interface&gt; 's.?a.?m.?b.?a.*[[:digit:]]' port 139
+smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Using Shodan to Retrieve Open Ports and Info</b></td>
+    <td>
+      <pre><code>nmap -sn -Pn -n --script=shodan-api --script-args 'shodan-api.apikey=XXXXXX' worldsworstwebsiteever.com</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Targeting</b></td>
+    <td>
+      Can build a mind map on individuals, including prioritization of targeting. I’ll figure out how to word what I want here. Most of it doesn't apply to "red team" since there is no real hacking. It applies to actual techniques to exploit individuals.
+    </td>
+  </tr>
+  <tr>
+    <td><b>Firewall Evasion</b></td>
+    <td>
+      <a href="https://github.com/kritikakatyal/Firewall-Evasion-Techniques-Analysis" target="_blank">Firewall Evasion Techniques – GitHub Analysis</a>
+    </td>
+  </tr>
+</table>
+
 
 ## Initial Access
 
