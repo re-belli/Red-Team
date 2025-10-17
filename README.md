@@ -38,15 +38,9 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Targeting</b></td>
-    <td>
-      Can build a mind map on individuals, including prioritization of targeting. I’ll figure out how to word what I want here. Most of it doesn't apply to "red team" since there is no real hacking. It applies to actual techniques to exploit individuals.
-    </td>
-  </tr>
-  <tr>
     <td><b>Firewall Evasion</b></td>
     <td>
-      <a href="https://github.com/kritikakatyal/Firewall-Evasion-Techniques-Analysis" target="_blank">Firewall Evasion Techniques – GitHub Analysis</a>
+      <a href="https://github.com/kritikakatyal/Firewall-Evasion-Techniques-Analysis" target="_blank">Firewall Evasion Techniques</a>
     </td>
   </tr>
 </table>
