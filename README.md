@@ -3,6 +3,7 @@
 
 - [OSINT](#osint)  
 - [External Recon](#external-recon)  
+- [Resource Development](#resource-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
 - [Command & Control](#command--control)  
@@ -46,6 +47,81 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   </tr>
 </table>
 
+## Resource Development
+
+<table>
+  <tr>
+    <td><b>Compile C++ and Expand CRT Heap</b></td>
+    <td>
+      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp auth_validator.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:auth_validator.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
+      <p><b>Flag Breakdown:</b></p>
+      <ul>
+        <li><code>/nologo</code>: Suppresses the compiler startup banner for cleaner output.</li>
+        <li><code>/MT</code>: Statically links the multithreaded C runtime (avoids dependency on external CRT DLLs).</li>
+        <li><code>/Ox</code>: Enables full optimization for speed and size.</li>
+        <li><code>/W0</code>: Disables all compiler warnings.</li>
+        <li><code>/GS-</code>: Disables buffer security checks (removes stack canaries).</li>
+        <li><code>/EHs-</code>: Disables C++ exception handling.</li>
+        <li><code>/GR-</code>: Disables RTTI (Run-Time Type Information), useful for size reduction.</li>
+        <li><code>/DNDEBUG</code>: Defines NDEBUG to disable debug assertions.</li>
+        <li><code>/Tp</code>: Compile C++ source.</li>
+        <li><code>/Tc</code>: Compile C source.</li>
+        <li><code>/NODEFAULTLIB</code>: Prevents linking against default libraries.</li>
+        <li><code>/MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text</code>: Merges read-only, exception, and data segments into the executable code segment to simplify memory layout and reduce footprint.</li>
+        <li><code>/HEAP:0x100000,0x100000</code>: Sets both initial and maximum crt heap size to 1MB.</li>
+        <li><code>/DYNAMICBASE:NO</code> and <code>/NXCOMPAT:NO</code>: Disables ASLR and DEP.</li>
+        <li><code>/ENTRY:WinMain</code>: Sets the entry point to the Windows GUI application function.</li>
+        <li><code>/SUBSYSTEM:WINDOWS</code>: Specifies the Windows GUI subsystem (instead of console).</li>
+        <li><code>/MACHINE:x64</code>: Target 64-bit architecture.</li>
+      </ul>
+      <p>For full documentation, see <a href="https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-alphabetically" target="_blank">Microsoft's Compiler Options Reference</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Compile assembly with MASM</b></td>
+    <td>
+      <pre><code>ml64 /c syscalls.asm /Fo syscalls.obj</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Compile .NET with csc.exe</b></td>
+    <td>
+      <pre><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /optimize+ /debug- .\data_recovery.cs</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Compile with Roslyn Compiler</b></td>
+    <td>
+      <pre><code>& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" /optimize+ /unsafe /debug- .\program.cs .\Structs.cs</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Publish .NET Application</b></td>
+    <td>
+      <pre><code>dotnet publish -c Release -r win-x64 --self-contained /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Convert COM Type Library to .NET Assembly</b></td>
+    <td>
+      <pre><code>tlbimp C:\Windows\System32\wsmauto.dll /out:WSManAutomation.dll</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Add Reference to .NET Project</b></td>
+    <td>
+      <pre><code>dotnet add reference WSManAutomation.dll</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>FreeBSD Cross-Compile with Clang</b></td>
+    <td>
+      <pre><code>clang --target=x86_64-unknown-freebsd12.2 --sysroot=/root/cross_compiler/freebsd-12.2-sysroot -I/root/cross_compiler/freebsd-12.2-sysroot/usr/include -L/root/cross_compiler/freebsd-12.2-sysroot/usr/lib -o shell shell.c -fPIC</code></pre>
+    </td>
+  </tr>
+</table>
+
+
 
 ## Initial Access
 
@@ -86,7 +162,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
     </tr>
     <tr>
-  <td>Insecure Deserialization</td>
+  <td><b>Insecure Deserialization</b></td>
   <td>
     <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Watch: Insecure Deserialization Explained</a><br>
     This vulnerability allows attackers to manipulate serialized objects to execute arbitrary code, escalate privileges, or bypass authentication — often used in advanced exploitation chains.
