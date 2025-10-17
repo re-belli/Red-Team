@@ -51,7 +51,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td><b>Compile C++ and Expand CRT Heap</b></td>
+    <td><b>Compile C++ codw with cl.exe</b></td>
     <td>
       <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp auth_validator.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:auth_validator.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
       <p><b>Flag Breakdown:</b></p>
@@ -74,7 +74,6 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
         <li><code>/SUBSYSTEM:WINDOWS</code>: Specifies the Windows GUI subsystem (instead of console).</li>
         <li><code>/MACHINE:x64</code>: Target 64-bit architecture.</li>
       </ul>
-      <p>For full documentation, see <a href="https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-alphabetically" target="_blank">Microsoft's Compiler Options Reference</a>.</p>
     </td>
   </tr>
   <tr>
