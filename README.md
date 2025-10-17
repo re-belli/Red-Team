@@ -164,8 +164,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <tr>
   <td><b>Insecure Deserialization</b></td>
   <td>
-    <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Watch: Insecure Deserialization Explained</a><br>
-    This vulnerability allows attackers to manipulate serialized objects to execute arbitrary code, escalate privileges, or bypass authentication — often used in advanced exploitation chains.
+    <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Insecure Deserialization Explained</a><br>
   </td>
 </tr>
 
