@@ -26,20 +26,20 @@
 
 <table>
   <tr>
-    <td><b>Protocol Recon via Packet Grep</b></td>
+    <td>Protocol Recon via Packet Grep</td>
     <td>
       <pre><code>sudo ngrep -i -d &lt;network interface&gt; 's.?a.?m.?b.?a.*[[:digit:]]' port 139
 smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Using Shodan to Retrieve Open Ports and Info</b></td>
+    <td>Using Shodan to Retrieve Open Ports and Info</td>
     <td>
       <pre><code>nmap -sn -Pn -n --script=shodan-api --script-args 'shodan-api.apikey=XXXXXX' worldsworstwebsiteever.com</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Firewall Evasion</b></td>
+    <td>Firewall Evasion</td>
     <td>
       <a href="https://github.com/kritikakatyal/Firewall-Evasion-Techniques-Analysis" target="_blank">Firewall Evasion Techniques</a>
     </td>
@@ -85,6 +85,14 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
       Will fill in, but popping these is how nation-states get in.
     </td>
     </tr>
+    <tr>
+  <td><b>Insecure Deserialization</b></td>
+  <td>
+    <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Watch: Insecure Deserialization Explained</a><br>
+    This vulnerability allows attackers to manipulate serialized objects to execute arbitrary code, escalate privileges, or bypass authentication — often used in advanced exploitation chains.
+  </td>
+</tr>
+
 </table>
 
 ---
