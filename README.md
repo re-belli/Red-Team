@@ -51,7 +51,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td><b>Compile C++ codw with cl.exe</b></td>
+    <td><b>Compile C++ with cl.exe</b></td>
     <td>
       <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp auth_validator.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:auth_validator.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
       <p><b>Flag Breakdown:</b></p>
@@ -83,13 +83,13 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Compile .NET with csc.exe</b></td>
+    <td><b>Compile C# with csc.exe</b></td>
     <td>
       <pre><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /optimize+ /debug- .\data_recovery.cs</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Compile with Roslyn Compiler</b></td>
+    <td><b>Compile C# with Roslyn Compiler</b></td>
     <td>
       <pre><code>& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" /optimize+ /unsafe /debug- .\program.cs .\Structs.cs</code></pre>
     </td>
