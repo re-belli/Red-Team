@@ -26,7 +26,7 @@
 
 <table>
   <tr>
-    <td><b>LinkedIn</b></td>
+    <td><b>Protocol Recon via Packet Grep</b></td>
     <td>
       <pre><code>sudo ngrep -i -d &lt;network interface&gt; 's.?a.?m.?b.?a.*[[:digit:]]' port 139
 smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
