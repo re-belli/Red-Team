@@ -1,16 +1,21 @@
 # Offensive Security Notes: Unredacted  
 **Be advised: hot takes ahead. These are the things people don’t say out loud.**
 
+## Guides 
+https://web.archive.org/web/20221126165225/https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html#enumeration
+https://kolegite.com/EE_library/books_and_lectures/%D0%9A%D0%B8%D0%B1%D0%B5%D1%80%D1%81%D0%B8%D0%B3%D1%83%D1%80%D0%BD%D0%BE%D1%81%D1%82/RTFM%20Red%20Team%20Field%20Manual%20v2%20--%20Ben%20Clark%20%26%20Nick%20Downer.pdf
+https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
+
 - [OSINT](#osint)  
 - [External Recon](#external-recon)  
-- [Malware Development](#maalware-development)  
+- [Malware Development](#malware-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
 - [Defense Evasion](#defense-evasion)  
-- [Command & Control](#command--control)  
+- [Command & Control](#command--control) 
+- [Privilege Escalation](#privilege-escalation)   
 - [Credential Access](#credential-access)  
 - [Lateral Movement](#lateral-movement)  
-- [Privilege Escalation](#privilege-escalation)  
 - [Exfiltration](#exfiltration)  
 
 ---
@@ -258,10 +263,34 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 ## Privilege Escalation
 
 <table>
-  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
-  <tr><td>Local Exploits</td><td>Kernel bugs, DLL hijacking, vulnerable drivers, CVE chaining</td></tr>
-  <tr><td>Misconfigurations</td><td>Unquoted service paths, writable directories, insecure permissions</td></tr>
-  <tr><td>Token / Role Abuse</td><td>Privileged token impersonation, cloud role escalation, SID history tricks</td></tr>
+  <tr>
+    <td>Windows POCs</td>
+    <td>
+      <a href="https://github.com/ycdxsb/WindowsPrivilegeEscalation" target="_blank">Windows POCs</a>  
+    </td>
+  </tr>
+  <tr>
+  <td>BOF Driver Exploit</td>
+  <td>
+      <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a>  
+      This exploitation technique is flagged by CrowdStrike as High or Critical. Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe.
+    </td>
+  </tr>
+  <tr>
+    <td>UAC Bypass</td>
+    <td>
+      <a href="https://github.com/sexyiam/UAC-Bypass/tree/main" target="_blank">UAC-Bypass</a>  
+      Many companies still have user accounts that are local administrators for their machine. 
+    </td>
+  </tr>
+  <tr>
+    <td>SeImpersonation</td>
+    <td>
+      <a href="https://github.com/tylerdotrar/SigmaPotato" target="_blank">SigmaPotato</a>  
+      In Windows, web servers and database services often inherit the SeImpersonatePrivilege by default. Microsoft has stated that elevating from a Local Service process (with SeImpersonate) to SYSTEM is "expected behavior" — making this a non-patchable issue.
+    </td>
+
+  </tr>
 </table>
 
 ---
