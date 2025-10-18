@@ -3,7 +3,7 @@
 
 - [OSINT](#osint)  
 - [External Recon](#external-recon)  
-- [Resource Development](#resource-development)  
+- [Malware Development](#maalware-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
 - [Defense Evasion](#defense-evasion)  
@@ -49,33 +49,13 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   </tr>
 </table>
 
-## Resource Development
+## Malware Development
 
 <table>
   <tr>
     <td><b>Compile C++ with cl.exe</b></td>
     <td>
-      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
-      <p><b>Flag Breakdown:</b></p>
-      <ul>
-        <li><code>/nologo</code>: Suppresses the compiler startup banner for cleaner output.</li>
-        <li><code>/MT</code>: Statically links the multithreaded C runtime (avoids dependency on external CRT DLLs).</li>
-        <li><code>/Ox</code>: Enables full optimization for speed and size.</li>
-        <li><code>/W0</code>: Disables all compiler warnings.</li>
-        <li><code>/GS-</code>: Disables buffer security checks (removes stack canaries).</li>
-        <li><code>/EHs-</code>: Disables C++ exception handling.</li>
-        <li><code>/GR-</code>: Disables RTTI (Run-Time Type Information), useful for size reduction.</li>
-        <li><code>/DNDEBUG</code>: Defines NDEBUG to disable debug assertions.</li>
-        <li><code>/Tp</code>: Compile C++ source.</li>
-        <li><code>/Tc</code>: Compile C source.</li>
-        <li><code>/NODEFAULTLIB</code>: Prevents linking against default libraries.</li>
-        <li><code>/MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text</code>: Merges read-only, exception, and data segments into the executable code segment to simplify memory layout and reduce footprint.</li>
-        <li><code>/HEAP:0x100000,0x100000</code>: Sets both initial and maximum crt heap size to 1MB.</li>
-        <li><code>/DYNAMICBASE:NO</code> and <code>/NXCOMPAT:NO</code>: Disables ASLR and DEP.</li>
-        <li><code>/ENTRY:WinMain</code>: Sets the entry point to the Windows GUI application function.</li>
-        <li><code>/SUBSYSTEM:WINDOWS</code>: Specifies the Windows GUI subsystem (instead of console).</li>
-        <li><code>/MACHINE:x64</code>: Target 64-bit architecture.</li>
-      </ul>
+      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text</code></pre>
     </td>
   </tr>
   <tr>
@@ -120,9 +100,37 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
       <pre><code>clang --target=x86_64-unknown-freebsd12.2 --sysroot=/root/cross_compiler/freebsd-12.2-sysroot -I/root/cross_compiler/freebsd-12.2-sysroot/usr/include -L/root/cross_compiler/freebsd-12.2-sysroot/usr/lib -o shell shell.c -fPIC</code></pre>
     </td>
   </tr>
+  <tr>
+    <td><b>Writing Shellcode for Windows x64</b></td>
+    <td>
+      <p>Source: <a href="https://nytrosecurity.com/2019/06/30/writing-shellcodes-for-windows-x64/">Nytro Security Blog</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Writing Stage 0 for Windows x64</b></td>
+    <td>
+      <p>Source: <a href="https://github.com/ahmedkhlief/Ninja/blob/master/core/agents/cmd_shellcodex64.ninja">GitHub - Ninja Shellcode</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Assembler to Write Windows Assembly</b></td>
+    <td>
+      <p>Online tool to convert x86/x64 assembly into raw shellcode bytes. Supports Intel syntax and includes disassembly features.</p>
+      <p>Tool: <a href="https://defuse.ca/online-x86-assembler.htm">Defuse Online Assembler</a></p>
+    </td>
+  </tr>
+  <tr>
+  <td><b>Windows Functions for Code Execution</b></td>
+  <td>
+    <a href="http://ropgadget.com/posts/abusing_win_functions.html">Abusing native Windows functions for shellcode execution</a></p>
+    <a href="https://github.com/nettitude/Tartarus-TpAllocInject/tree/main">Modern syscall lookup and thread pool execution</a></p>
+  </td>
+</tr>
+
 </table>
 
 
+---
 
 ## Initial Access
 
