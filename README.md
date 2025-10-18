@@ -146,7 +146,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <td>Supply Chain</td>
     <td>
       <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">VS Code Plugin </a>
-      I have seen many developers trust and install plugins that come from the Visual Studio code marketplace. <a href="https://www.bleepingcomputer.com/news/security/malicious-vscode-extensions-with-millions-of-installs-discovered/" target="_blank"></a>
+      I have seen many developers trust and install plugins that come from the Visual Studio code marketplace. <a href="https://www.bleepingcomputer.com/news/security/malicious-vscode-extensions-with-millions-of-installs-discovered/" target="_blank">Israeli researchers target Darcula plugin</a>
     </td>
     </tr>
     <tr>
@@ -164,7 +164,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <tr>
   <td><b>Insecure Deserialization</b></td>
   <td>
-    <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Insecure Deserialization Explained</a><br>
+    <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Insecure Deserialization Explained</a>
   </td>
 </tr>
 
