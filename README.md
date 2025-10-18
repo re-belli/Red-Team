@@ -112,7 +112,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Writing Stage 0 for Windows x64</b></td>
+    <td><b>Writing Stage 1 for Windows x64</b></td>
     <td>
       <p>Source: <a href="https://github.com/ahmedkhlief/Ninja/blob/master/core/agents/cmd_shellcodex64.ninja">GitHub - Ninja Shellcode</a></p>
     </td>
