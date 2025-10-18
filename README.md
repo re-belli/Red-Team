@@ -162,7 +162,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
     </tr>
     <tr>
-  <td><b>Insecure Deserialization</b></td>
+  <td>Insecure Deserialization</td>
   <td>
     <a href="https://www.youtube.com/watch?v=t-zVC-CxYjw" target="_blank">Insecure Deserialization Explained</a>
   </td>
