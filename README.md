@@ -112,7 +112,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Writing Stage 1 for Windows x64</b></td>
+    <td><b>Writing Stage 0 for Windows x64</b></td>
     <td>
       <p>Source: <a href="https://github.com/ahmedkhlief/Ninja/blob/master/core/agents/cmd_shellcodex64.ninja">GitHub - Ninja Shellcode</a></p>
     </td>
@@ -270,10 +270,10 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-  <td>BOF Driver Exploit</td>
-  <td>
+    <td>BOF Driver Exploit</td>
+    <td>
       <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a>  
-      This exploitation technique is flagged by CrowdStrike as High or Critical. Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe.
+      Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe. CrowdStrike will receive ObRegisterCallback in the kernel and flag it as token access manipulation.
     </td>
   </tr>
   <tr>
@@ -289,9 +289,27 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
       <a href="https://github.com/tylerdotrar/SigmaPotato" target="_blank">SigmaPotato</a>  
       In Windows, web servers and database services often inherit the SeImpersonatePrivilege by default. Microsoft has stated that elevating from a Local Service process (with SeImpersonate) to SYSTEM is "expected behavior" — making this a non-patchable issue.
     </td>
-
+  </tr>
+  <tr>
+    <td>In-depth AD Exploitation</td>
+    <td>
+      <a href="https://zer1t0.gitlab.io/posts/attacking_ad/" target="_blank">Attacking Active Directory</a>  
+    </td>
+  </tr>
+  <tr>
+    <td>Common AD Exploitation Techniques</td>
+    <td>
+      <a href="https://en.hackndo.com/" target="_blank">Hackndo Blog</a>
+    </td>
+  </tr>
+  <tr>
+    <td>ADCS Exploitation Techniques</td>
+    <td>
+      <a href="https://hideandsec.sh/books/cheatsheets-82c/page/active-directory-certificate-services" target="_blank">ADCS Cheatsheet</a>
+    </td>
   </tr>
 </table>
+
 
 ---
 
