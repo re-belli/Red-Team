@@ -291,7 +291,7 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
   <tr>
     <td>BOF Driver Exploit</td>
     <td>
-      <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a>  
+      <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a> -   
       Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe. CrowdStrike will receive ObRegisterCallback in the kernel and flag it as token access manipulation.
     </td>
   </tr>
@@ -299,14 +299,14 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
     <td>UAC Bypass</td>
     <td>
       <a href="https://github.com/sexyiam/UAC-Bypass/tree/main" target="_blank">UAC-Bypass</a>  
-      Many companies still have user accounts that are local administrators for their machine. 
+      - Many companies still have user accounts that are local administrators for their machine. 
     </td>
   </tr>
   <tr>
     <td>SeImpersonation</td>
     <td>
       <a href="https://github.com/tylerdotrar/SigmaPotato" target="_blank">SigmaPotato</a>  
-      In Windows, web servers and database services often inherit the SeImpersonatePrivilege by default. Microsoft has stated that elevating from a Local Service process (with SeImpersonate) to SYSTEM is "expected behavior" — making this a non-patchable issue.
+      - In Windows, web servers and database services often inherit the SeImpersonatePrivilege by default. Microsoft has stated that elevating from a Local Service process (with SeImpersonate) to SYSTEM is "expected behavior" — making this a non-patchable issue.
     </td>
   </tr>
   <tr>
