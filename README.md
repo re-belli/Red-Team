@@ -13,6 +13,7 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 - [Execution](#execution)  
 - [Defense Evasion](#defense-evasion)  
 - [Command & Control](#command--control) 
+- [Persistence](#persistence) 
 - [Privilege Escalation](#privilege-escalation)   
 - [Credential Access](#credential-access)  
 - [Lateral Movement](#lateral-movement)  
@@ -24,7 +25,7 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 
 <table>
   <tr><td>LinkedIn</td><td>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
-  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or -lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
+  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
   <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll figure out how to word what I want here. Most of it doesn't apply to "red team" since there is no real hacking. It apply to actual technqiues to exploit individuals.</td></tr>
 </table>
 
@@ -112,7 +113,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td>Writing Stage 0 for Windows x64</td>
+    <td>Writing stager for Windows x64</td>
     <td>
       <p>Source: <a href="https://github.com/ahmedkhlief/Ninja/blob/master/core/agents/cmd_shellcodex64.ninja">GitHub - Ninja Shellcode</a></p>
     </td>
@@ -120,8 +121,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   <tr>
     <td>Assembler to Write Windows Assembly</td>
     <td>
-      <p>Online tool to convert x86/x64 assembly into raw shellcode bytes. Supports Intel syntax and includes disassembly features.</p>
-      <p>Tool: <a href="https://defuse.ca/online-x86-assembler.htm">Defuse Online Assembler</a></p>
+      <p>Tool: <a href="https://defuse.ca/online-x86-assembler.htm">Online tool to convert x86/x64 assembly into raw shellcode bytes.</a></p>
     </td>
   </tr>
   <tr>
@@ -141,7 +141,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <tr>
     <td>Phishing/Smishing</td>
     <td>
-      <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a>,  
+      <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a> -  
       MFA becoming more popular and companies usually only give higher-ups phones. This means most employees use their personal phones.
     </td>
     </tr>
@@ -149,8 +149,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   <tr>
     <td>Excel</td>
     <td>
-      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Rust XLL</a>
-      Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.
+      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Rust XLL</a> - Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.
     </td>
     </tr>
     <tr>
@@ -237,16 +236,35 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 ---
 
-## Credential Access
+## Persistence
+
+<table>
+  <tr><td>Startup Execution</td><td>Create Windows shortcut via RDP session → Win + R → shell:startup → Enter, or upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2. The file creation would be seen by a MiniFilter driver, but that alone won't flag.</td></tr>
+<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. schtasks.exe is a LOLBin and has been abused heavily — calling it alone won't flag, but the chain leading to code execution will be monitored closely. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
+  <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll and dbghelp.dll</td></tr>
+</table>
+
+
+---
 
 ## Credential Access
 
 <table>
   <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
   <tr><td>Browser Credential Theft</td><td><a href="https://github.com/djhohnstein/SharpChromium">SharpChromium</a> – .NET 4.0 CLR project to retrieve Chromium data such as cookies, history, and saved logins</td></tr>
-  <tr><td>NetNTLM Hash Leaks</td><td><a href="https://www.securify.nl/en/blog/living-off-the-land-stealing-netntlm-hashes/"> Stealing Hashes with Responder</a> - SMB signing is enabled by default only on Domain Controllers; Windows endpoints must manually enable it. UNC path internet shortcuts can leak NetNTLM hashes simply by being viewed. In Active Directory environments, it's common to have domain fileshares accessible by many endpoints. Dropping .url on a share with many files is a common tactic. Even with SMB signing enabled, this does not prevent hash leaks via WebDAV or HTTP if a user clicks an internet shortcut or views the link.</td></tr>
- <tr><td>Keyloggers</td><td><a href="https://github.com/d1rkmtrr/TakeMyRDP">RDP session hijacking</a> – Keyloggers are another method for capturing cleartext credentials. RDP is still commonly used within internal networks, and a frequent scenario where this attack applies is when users log into jump boxes via Remote Desktop. The tool performs keyboard hooking only when the user is focused on a Remote Desktop session, making it more stealthy than generic keyloggers that hook the keyboard continuously and record everything typed. However, it remains memory-intensive. A tip for optimizing keyloggers is adding a millisecond delay at the end of each hooking procedure to reduce CPU usage. It's also best to store captured characters in in-memory buffers rather than writing to disk. Logging should occur over the current C2 session comms. This code would be best optimized and utilized as a BOF.</td></tr>
-<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard for little reward. In big company networks, I usually only see regular user accounts on endpoint machines. It’s safer just to force a NetNTLM hash leak than to dump LSASS to get NTLM. Yes, cracking is easier for NTLM, but NetNTLM also uses a weak cryptographic algorithm, so a modern GPU rig with Hashcat will eventually crack it. Also, elite bigger companies use temporary DA accounts that are not housed on the user's Windows box but on a separate virtual machine that you have to log into. Seeing DA accounts on operational servers for less-secure companies is still common. I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals of forking and dumping from the non-main LSASS process is a good principle. I would also add that after doing the dump, you should overwrite the MDMP header and avoid saving it to disk. This is another example of code that should be implemented as a BOF file or .NET assembly that can be run in memory, with the dump directly transferred over the wire.</td></tr>
+  <tr><td>NetNTLM Hash Leaks</td><td><a href="https://www.securify.nl/en/blog/living-off-the-land-stealing-netntlm-hashes/"> Stealing Hashes with Responder</a> - SMB signing is enabled by default only on Domain Controllers; Windows endpoints must manually enable it. UNC path internet shortcuts can leak NetNTLM hashes simply by being viewed. 
+
+  In Active Directory environments, it's common to have domain fileshares accessible by many endpoints. Dropping .url on a share with many files is a common tactic. Even with SMB signing enabled, this does not prevent hash leaks via WebDAV or HTTP if a user clicks an internet shortcut or views the link.</td></tr>
+ <tr><td>Keyloggers</td><td><a href="https://github.com/d1rkmtrr/TakeMyRDP">RDP session hijacking</a> – Keyloggers are another method for capturing cleartext credentials. RDP is still commonly used within internal networks, and a frequent scenario where this attack applies is when users log into jump boxes via Remote Desktop. 
+
+ The tool performs keyboard hooking only when the user is focused on a Remote Desktop session, making it more stealthy than generic keyloggers that hook the keyboard continuously and record everything typed. However, it remains memory-intensive. 
+
+A tip for optimizing keyloggers is adding a millisecond delay at the end of each hooking procedure to reduce CPU usage. It's also best to store captured characters in in-memory buffers rather than writing to disk. Logging should occur over the current C2 session comms. This code would be best optimized and utilized as a BOF.</td></tr>
+<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard for little reward. In big company networks, I usually only see regular user accounts on endpoint machines. It’s safer just to force a NetNTLM hash leak than to dump LSASS to get NTLM. 
+
+Yes, cracking is easier for NTLM, but NetNTLM also uses a weak cryptographic algorithm, so a modern GPU rig with Hashcat will eventually crack it. Also, elite bigger companies use temporary DA accounts that are not housed on the user's Windows box but on a separate virtual machine that you have to log into. Seeing DA accounts on operational servers for less-secure companies is still common. 
+
+I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals of forking and dumping from the non-main LSASS process is a good principle. I would also add that after doing the dump, you should overwrite the MDMP header and avoid saving it to disk. This is another example of code that should be implemented as a BOF file or .NET assembly that can be run in memory, with the dump directly transferred over the wire.</td></tr>
 </table>
 
 ---
@@ -254,7 +272,6 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 ## Lateral Movement
 
 <table>
-  <tr><td><b>Subcategory</b></td><td><b>Description / Notes</b></td></tr>
   <tr><td>Remote Execution</td><td>WMI, PSRemoting, scheduled tasks, service creation</td></tr>
   <tr><td>Credential Reuse</td><td>Pass-the-Hash, Pass-the-Ticket, Kerberoasting, plaintext creds</td></tr>
   <tr><td>AD / Identity Abuse</td><td>ACL abuse, shadow admin paths, group membership manipulation</td></tr>
