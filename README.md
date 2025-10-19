@@ -1,5 +1,7 @@
 # Offensive Security Notes: Unredacted  
 **Be advised: hot takes ahead. These are the things people don’t say out loud.**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem, which most companies utilize.**
+
 
 ## Guides 
 https://web.archive.org/web/20221126165225/https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html#enumeration
@@ -240,8 +242,8 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr><td>Startup Execution</td><td>Create Windows shortcut via RDP session → Win + R → shell:startup → Enter, or upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2. The file creation would be seen by a MiniFilter driver, but that alone won't flag.</td></tr>
-<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. schtasks.exe is a LOLBin and has been abused heavily — calling it alone won't flag, but the chain leading to code execution will be monitored closely. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
   <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll and dbghelp.dll</td></tr>
+<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
 
 
@@ -269,13 +271,24 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
 
 ---
 
+
 ## Lateral Movement
 
 <table>
-  <tr><td>Remote Execution</td><td>WMI, PSRemoting, scheduled tasks, service creation</td></tr>
-  <tr><td>Credential Reuse</td><td>Pass-the-Hash, Pass-the-Ticket, Kerberoasting, plaintext creds</td></tr>
-  <tr><td>AD / Identity Abuse</td><td>ACL abuse, shadow admin paths, group membership manipulation</td></tr>
+  <tr>
+    <td>WMI</td>
+    <td>
+      <a href="https://github.com/XiaoliChan/wmiexec-Pro/tree/main" target="_blank">wmiexec-Pro GitHub</a>  
+      - WMI Event Subscriptions and `Win32_Process` are heavily monitored by CrowdStrike. This technique doesn't rely on `Win32_Process`. I will update in the future if it bypasses CrowdStrike.
+    </td>
+  </tr>
+  <tr>
+    <td>WinRM</td>
+    <td>
+      <a href="https://github.com/bohops/WSMan-WinRM" target="_blank">WSMan-WinRM GitHub</a>  
+  </tr>
 </table>
+
 
 ---
 
