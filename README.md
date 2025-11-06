@@ -242,7 +242,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr><td>Startup Execution</td><td>Create Windows shortcut via RDP session → Win + R → shell:startup → Enter, or upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2. The file creation would be seen by a MiniFilter driver, but that alone won't flag.</td></tr>
-  <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll and dbghelp.dll</td></tr>
+  <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll, dbghelp.dll, and userenv.dll</td></tr>
 <tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
 
