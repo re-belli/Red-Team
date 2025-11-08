@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
-**Be advised: hot takes ahead. These are the things people don’t say out loud.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem, which most companies utilize.**
+**Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
 
 
 ## Guides 
@@ -10,7 +10,7 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 
 - [OSINT](#osint)  
 - [External Recon](#external-recon)  
-- [Malware Development](#malware-development)  
+- [Resource Development](#resource-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
 - [Defense Evasion](#defense-evasion)  
@@ -57,7 +57,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   </tr>
 </table>
 
-## Malware Development
+## Resource Development
 
 <table>
   <tr>
@@ -227,6 +227,75 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 ---
 
+## Defense Evasion  
+*EDR evasion is covered separately in `MalwareDevelopment.md`.*
+
+<table>
+  <tr>
+    <td>AMSI Bypass (clr.dll)</td>
+    <td>
+      <a href="https://github.com/backdoorskid/ClrAmsiScanPatcher" target="_blank">ClrAmsiScanPatcher</a>  
+      - Patch the `AmsiScan` function located in `clr.dll` to disable AMSI scanning for .NET assemblies.
+    </td>
+  </tr>
+  <tr>
+    <td>AMSI Bypass (Custom Patch)</td>
+    <td>
+      <code>
+        xor eax, eax ; clear eax<br>
+        shl eax, 16 ; shift eax left by 16 bits<br>
+        or ax, 0x57 ; Set the lower 16 bits value to 0x57<br>
+        ret
+      </code><br>
+      - A custom patch for `AmsiScanBuffer` that sets the return value to `S_OK` (0x00000057), effectively bypassing AMSI by faking a clean scan result.
+    </td>
+  </tr>
+  <tr>
+    <td>ETW Bypass (EAT Hook)</td>
+    <td>
+      <a href="https://www.unknowncheats.me/forum/c-and-c-/50426-eat-hooking-dlls.html" target="_blank">EAT Hooking Example</a>  
+      - Use an Export Address Table (EAT) hook on ADVAPI32's `EventWrite` to redirect to a dummy function that returns, effectively suppressing ETW logging.
+    </td>
+  </tr>
+  <tr>
+    <td>ETW Bypass (Egghunter)</td>
+    <td>
+      <a href="https://github.com/Kara-4search/BypassETW_CSharp" target="_blank">BypassETW_CSharp</a>  
+      - Load `RtlInitializeResource` and use an egghunter pattern to locate and patch ETW in memory.
+    </td>
+  </tr>
+  <tr>
+    <td>ETW Bypass (PowerShell)</td>
+    <td>
+      <a href="https://gist.github.com/tandasat/e595c77c52e13aaee60e1e8b65d2ba32" target="_blank">ETW Patch via PowerShell</a>  
+      - Uses reflection to set `System.Management.Automation.Tracing.PSEtwLogProvider.etwProvider.m_enabled` to `0`, disabling Suspicious ScriptBlock Logging in PowerShell.
+    </td>
+  </tr>
+  <tr>
+    <td>WDAC Bypass</td>
+    <td>
+      <a href="https://github.com/bohops/UltimateWDACBypassList" target="_blank">Ultimate WDAC Bypass List</a>  
+      - A centralized resource for previously documented bypass techniques targeting WDAC, Device Guard, and UMCI. Includes examples of LOLBIN abuse, unsigned code execution vectors, and policy misconfigurations that allow attackers to evade application control.
+    </td>
+  </tr>
+  <tr>
+    <td>CLM Bypass</td>
+    <td>
+      <a href="https://github.com/Above2/Bypass/tree/main" target="_blank">CLM Bypass Tool</a>  
+      - A stripped-down version of the original `bypass-clm` project, designed to bypass PowerShell's Constrained Language Mode using `installutil.exe`. Commands can be passed via command-line switches, files, or base64 strings for flexible execution.
+    </td>
+  </tr>
+  <tr>
+    <td>AV Bypass</td>
+    <td>
+      <a href="https://github.com/cwolff411/powerob/tree/master" target="_blank">PowerOb</a>  
+      - A script to obfuscate `PowerUp.ps1`, helping evade static and signature-based detection by Windows Defender.
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Command & Control
 
 <table>
@@ -241,7 +310,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 ## Persistence
 
 <table>
-  <tr><td>Startup Execution</td><td>Create Windows shortcut via RDP session → Win + R → shell:startup → Enter, or upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2. The file creation would be seen by a MiniFilter driver, but that alone won't flag.</td></tr>
+  <tr><td>Startup Execution</td><td>upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag CrowdStrike.</td></tr>
   <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll, dbghelp.dll, and userenv.dll</td></tr>
 <tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
@@ -262,9 +331,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
  The tool performs keyboard hooking only when the user is focused on a Remote Desktop session, making it more stealthy than generic keyloggers that hook the keyboard continuously and record everything typed. However, it remains memory-intensive. 
 
 A tip for optimizing keyloggers is adding a millisecond delay at the end of each hooking procedure to reduce CPU usage. It's also best to store captured characters in in-memory buffers rather than writing to disk. Logging should occur over the current C2 session comms. This code would be best optimized and utilized as a BOF.</td></tr>
-<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard for little reward. In big company networks, I usually only see regular user accounts on endpoint machines. It’s safer just to force a NetNTLM hash leak than to dump LSASS to get NTLM. 
-
-Yes, cracking is easier for NTLM, but NetNTLM also uses a weak cryptographic algorithm, so a modern GPU rig with Hashcat will eventually crack it. Also, elite bigger companies use temporary DA accounts that are not housed on the user's Windows box but on a separate virtual machine that you have to log into. Seeing DA accounts on operational servers for less-secure companies is still common. 
+<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard especially against CrowdStrike. But there are instances where having ntlm can be useful.
 
 I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals of forking and dumping from the non-main LSASS process is a good principle. I would also add that after doing the dump, you should overwrite the MDMP header and avoid saving it to disk. This is another example of code that should be implemented as a BOF file or .NET assembly that can be run in memory, with the dump directly transferred over the wire.</td></tr>
 </table>
@@ -302,7 +369,7 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
     </td>
   </tr>
   <tr>
-    <td>BOF Driver Exploit</td>
+    <td>BOF Kernel Exploit</td>
     <td>
       <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a> -   
       Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe. CrowdStrike will receive ObRegisterCallback in the kernel and flag it as token access manipulation.
