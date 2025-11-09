@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
-**Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
+**Be advised: hot takes ahead. These are the things people don’t say out loud.**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem, which most companies utilize.**
 
 
 ## Guides 
@@ -228,9 +228,15 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 ---
 
 ## Defense Evasion  
-*EDR evasion is covered separately in `MalwareDevelopment.md`.*
+*EDR evasion for shellcode loaders is covered separately in `MalwareDevelopment.md`.*
 
 <table>
+  <tr>
+    <td>BYOD – Removing Kernel Callbacks</td>
+    <td>
+      - I am not 
+    </td>
+  </tr>
   <tr>
     <td>AMSI Bypass (clr.dll)</td>
     <td>
@@ -261,7 +267,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <td>ETW Bypass (Egghunter)</td>
     <td>
       <a href="https://github.com/Kara-4search/BypassETW_CSharp" target="_blank">BypassETW_CSharp</a>  
-      - Load `RtlInitializeResource` and use an egghunter pattern to locate and patch ETW in memory.
+      - Load `RtlInitializeResource` and use an egghunter pattern to locate and patch ETW structures in memory.
     </td>
   </tr>
   <tr>
@@ -286,13 +292,22 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td>AV Bypass</td>
-    <td>
-      <a href="https://github.com/cwolff411/powerob/tree/master" target="_blank">PowerOb</a>  
-      - A script to obfuscate `PowerUp.ps1`, helping evade static and signature-based detection by Windows Defender.
-    </td>
-  </tr>
+  <td>AV Bypass</td>
+ <td>
+  <a href="https://github.com/cwolff411/powerob/tree/master" target="_blank">PowerOb</a>  
+  - A script to obfuscate `PowerUp.ps1`, helping evade static and signature-based detection by Windows Defender.
+  <br><br>
+  <a href="https://github.com/Trigleos/ELFREVGO.git" target="_blank">ELFREVGO</a>  
+  - A tool to obfuscate ELF binaries using custom code generation and function redirection to evade static analysis and signature-based detection on Linux systems.
+  <br><code>ELFREVGO/bin/ELFREVGO -f test -e -t -n -gd execve -gf custom_logger -o testx</code>
+  <br><br>
+  <a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/discovery_suid_sguid_enumeration.toml" target="_blank">Elastic Rule Bypass</a>  
+  - A unique method to enumerate SUID binaries that evades above rule.
+  <br><code>find / -type f 2>/dev/null -exec stat -c "%A %n" {} + | grep '^...s'</code>
+</td>
+</tr>
 </table>
+
 
 ---
 
