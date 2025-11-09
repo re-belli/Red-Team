@@ -232,10 +232,33 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
 <table>
   <tr>
-    <td>BYOD – Removing Kernel Callbacks</td>
-    <td>
-      - I am not 
-    </td>
+ <td>BYOD – Removing Kernel Callbacks</td>
+<td>
+  - For most standard red team operations, I am generally against using kernel drivers or rootkits. However, I do see their value in long-term intelligence and persistence operations. This Defcon talk provides a solid overview of rootkits: 
+  <a href="http://web.archive.org/web/20240616103916/https://exploitreversing.com/wp-content/uploads/2021/12/defcon2018-2.pdf" target="_blank">Defcon 2018 Rootkits Talk (PDF)</a>.
+
+  Loading a kernel driver requires Administrator privileges. As noted in this <a href="https://www.elastic.co/security-labs/forget-vulnerable-drivers-admin-is-all-you-need" target="_blank">Elastic blog post</a>, "Administrative processes and users are considered part of the Trusted Computing Base (TCB) for Windows and are therefore not strongly isolated from the kernel boundary." While this precedent contradicts foundational computer science and operating system principles, it reflects Microsoft's stance on the matter.
+
+  Numerous examples exist of using signed vulnerable drivers to disable EDR solutions, though most do not affect CrowdStrike. One such project is <a href="https://github.com/zer0condition/mhydeath?tab=readme-ov-file" target="_blank">MHYDEATH</a>, which loads a vulnerable signed driver and terminates the userland components of many EDR solutions. In CrowdStrike’s case, most functionality resides in `csagent.sys`, which will simply restart the userland component and trigger a high alert for Defense Evasion.
+
+  The `csagent.sys` driver is not registered like typical Windows kernel drivers and behaves much like a rootkit. Attempting to terminate it results in a BSOD, so the next best strategy is to neutralize its callbacks. Common callbacks monitored by EDR kernel drivers include:
+
+  <code>
+    CmRegisterCallback(Ex) – triggered on registry operations<br>
+    MiniFilter driver – monitors file system I/O (read, write, delete, move)<br>
+    ObRegisterCallbacks() – monitors and controls access to process and thread objects<br>
+    PsSetCreateThreadNotifyRoutine(Ex) – triggered when a thread starts or ends<br>
+    PsSetLoadImageNotifyRoutine(Ex) – triggered when a DLL or EXE is mapped into memory<br>
+    PsSetLegoNotifyRoutine – triggered when a thread exits
+  </code>
+
+  <br><br>
+  Another useful project for removing kernel callbacks is <a href="https://github.com/lawiet47/STFUEDR/tree/main" target="_blank">STFUEDR</a>. It demonstrates effective techniques for defanging EDR kernel callbacks. I recommend combining its approach with MHYDEATH’s functionality by embedding the driver as a buffer during compilation rather than loading it from disk.
+
+  STFUEDR also uses the RTCore driver, which is listed on the <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-control/app-control-for-business/design/microsoft-recommended-driver-block-rules#vulnerable-driver-blocklist-xml" target="_blank">Microsoft Vulnerable Driver Blocklist</a>. This blocklist is enabled by default starting with Windows 11, so you must choose a vulnerable driver that is not included in that list to avoid automatic blocking.
+
+  One such alternative is the <a href="https://github.com/Dor00tkit/DellInstrumentation_PoC/tree/main" target="_blank">DellInstrumentation PoC</a> project. The DellInstrumentation driver isn't on the Microsoft Vulnerable Driver Blocklist.
+</td>
   </tr>
   <tr>
     <td>AMSI Bypass (clr.dll)</td>
@@ -301,8 +324,8 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   - A tool to obfuscate ELF binaries using custom code generation and function redirection to evade static analysis and signature-based detection on Linux systems.
   <br><code>ELFREVGO/bin/ELFREVGO -f test -e -t -n -gd execve -gf custom_logger -o testx</code>
   <br><br>
-  <a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/discovery_suid_sguid_enumeration.toml" target="_blank">Elastic Rule Bypass</a>  
-  - A unique method to enumerate SUID binaries that evades above rule.
+  <a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/discovery_suid_sguid_enumeration.toml" target="_blank">Elastic SUID rule</a>  
+  - A unique method to enumerate SUID binaries that evades this rule.
   <br><code>find / -type f 2>/dev/null -exec stat -c "%A %n" {} + | grep '^...s'</code>
 </td>
 </tr>
