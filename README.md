@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
-**Be advised: hot takes ahead. These are the things people don’t say out loud.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem, which most companies utilize.**
+**Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem**
 
 
 ## Guides 
@@ -26,9 +26,9 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 ## OSINT
 
 <table>
-  <tr><td>LinkedIn</td><td>Can Filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
+  <tr><td>LinkedIn</td><td>Can filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
   <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
-  <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting. I’ll figure out how to word what I want here. Most of it doesn't apply to "red team" since there is no real hacking. It apply to actual technqiues to exploit individuals.</td></tr>
+  <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting.</td></tr>
 </table>
 
 ---
@@ -151,7 +151,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
   <tr>
     <td>Excel</td>
     <td>
-      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Rust XLL</a> - Microsoft blocks macros in documents originating from the internet (email AND web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.
+      <a href="https://github.com/mttaggart/xllrs" target="_blank"> Rust XLL</a> - Microsoft blocks macros in documents originating from the internet (email and web download), XLL (Excel Add-Ins) are dlls loaded by Excel. Still get warning for no signature. Need legitimate code signing certificate to avoid this.
     </td>
     </tr>
     <tr>
@@ -241,19 +241,13 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
   Numerous examples exist of using signed vulnerable drivers to disable EDR solutions, though most do not affect CrowdStrike. One such project is <a href="https://github.com/zer0condition/mhydeath?tab=readme-ov-file" target="_blank">MHYDEATH</a>, which loads a vulnerable signed driver and terminates the userland components of many EDR solutions. In CrowdStrike’s case, most functionality resides in `csagent.sys`, which will simply restart the userland component and trigger a high alert for Defense Evasion.
 
-  The `csagent.sys` driver is not registered like typical Windows kernel drivers and behaves much like a rootkit. Attempting to terminate it results in a BSOD, so the next best strategy is to neutralize its callbacks. Common callbacks monitored by EDR kernel drivers include:
+  The `csagent.sys` driver is not registered like typical Windows kernel drivers and behaves much like a rootkit. Attempting to terminate it results in a BSOD, so the next best strategy is to neutralize its callbacks.  
 
-  <code>
-    CmRegisterCallback(Ex) – triggered on registry operations<br>
-    MiniFilter driver – monitors file system I/O (read, write, delete, move)<br>
-    ObRegisterCallbacks() – monitors and controls access to process and thread objects<br>
-    PsSetCreateThreadNotifyRoutine(Ex) – triggered when a thread starts or ends<br>
-    PsSetLoadImageNotifyRoutine(Ex) – triggered when a DLL or EXE is mapped into memory<br>
-    PsSetLegoNotifyRoutine – triggered when a thread exits
-  </code>
+A list of kernel callbacks can be found here.  
+<a href="https://codemachine.com/articles/kernel_callback_functions.html" target="_blank">Kernel Callbacks</a>
 
   <br><br>
-  Another useful project for removing kernel callbacks is <a href="https://github.com/lawiet47/STFUEDR/tree/main" target="_blank">STFUEDR</a>. It demonstrates effective techniques for defanging EDR kernel callbacks. I recommend combining its approach with MHYDEATH’s functionality by embedding the driver as a buffer during compilation rather than loading it from disk.
+  A useful project for removing kernel callbacks is <a href="https://github.com/lawiet47/STFUEDR/tree/main" target="_blank">STFUEDR</a>. I recommend combining its approach with MHYDEATH’s functionality by embedding the driver as a buffer during compilation rather than loading it from disk.
 
   STFUEDR also uses the RTCore driver, which is listed on the <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-control/app-control-for-business/design/microsoft-recommended-driver-block-rules#vulnerable-driver-blocklist-xml" target="_blank">Microsoft Vulnerable Driver Blocklist</a>. This blocklist is enabled by default starting with Windows 11, so you must choose a vulnerable driver that is not included in that list to avoid automatic blocking.
 
@@ -417,7 +411,7 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
     <td>UAC Bypass</td>
     <td>
       <a href="https://github.com/sexyiam/UAC-Bypass/tree/main" target="_blank">UAC-Bypass</a>  
-      - Many companies still have user accounts that are local administrators for their machine. 
+      - Many companies still have user accounts that are local administrators for their Windows endpoints. 
     </td>
   </tr>
   <tr>
