@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
 **Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
 
 
 ## Guides 
