@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
 **Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem**
 
 
 ## Guides 
@@ -246,7 +246,6 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 A list of kernel callbacks can be found here.  
 <a href="https://codemachine.com/articles/kernel_callback_functions.html" target="_blank">Kernel Callbacks</a>
 
-  <br><br>
   A useful project for removing kernel callbacks is <a href="https://github.com/lawiet47/STFUEDR/tree/main" target="_blank">STFUEDR</a>. I recommend combining its approach with MHYDEATH’s functionality by embedding the driver as a buffer during compilation rather than loading it from disk.
 
   STFUEDR also uses the RTCore driver, which is listed on the <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-control/app-control-for-business/design/microsoft-recommended-driver-block-rules#vulnerable-driver-blocklist-xml" target="_blank">Microsoft Vulnerable Driver Blocklist</a>. This blocklist is enabled by default starting with Windows 11, so you must choose a vulnerable driver that is not included in that list to avoid automatic blocking.
@@ -262,7 +261,7 @@ A list of kernel callbacks can be found here.
     </td>
   </tr>
   <tr>
-    <td>AMSI Bypass (Custom Patch)</td>
+    <td>64-bit AMSI Bypass (Custom Patch)</td>
     <td>
       <code>
         xor eax, eax ; clear eax<br>
