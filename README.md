@@ -343,7 +343,7 @@ A list of kernel callbacks can be found here.
 <table>
   <tr><td>Startup Execution</td><td>upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag CrowdStrike.</td></tr>
   <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll, dbghelp.dll, and userenv.dll</td></tr>
-<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
+<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallbackEx kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
 
 
