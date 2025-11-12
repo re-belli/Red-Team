@@ -156,7 +156,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
       MFA is becoming more popular, and companies usually only provide phones to higher‑level employees. As a result, most employees use their personal phones.
     </td>
     </tr>
-  <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extraced with 7-zip. Falcon flags on using tar from windows due to lolbin</td></tr>
+  <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extracted with 7-zip. Falcon flags on using tar from windows due to lolbin</td></tr>
   <tr>
     <td>Excel</td>
     <td>
@@ -167,7 +167,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <td>Supply Chain</td>
     <td>
       <a href="https://github.com/0x-Apollyon/Malicious-VScode-Extension" target="_blank">VS Code Plugin </a> -
-      I have seen many developers trust and install plugins that come from the Visual Studio code marketplace. <a href="https://www.bleepingcomputer.com/news/security/malicious-vscode-extensions-with-millions-of-installs-discovered/" target="_blank"> - Israeli researchers target Darcula plugin</a>
+      I have seen many developers trust and install plugins that come from the Visual Studio Code marketplace. <a href="https://www.bleepingcomputer.com/news/security/malicious-vscode-extensions-with-millions-of-installs-discovered/" target="_blank"> - Israeli researchers target Darcula plugin</a>
     </td>
     </tr>
     <tr>
