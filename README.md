@@ -1,6 +1,6 @@
 # Offensive Security Notes: Unredacted  
 **Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
-**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem**
+**When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
 
 
 ## Guides 
@@ -26,10 +26,20 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 ## OSINT
 
 <table>
-  <tr><td>LinkedIn</td><td>Can filter by company and it shows employees, also even shows people based on type of degree (allows you to profile targets) - Can use VPN and dummy account</td></tr>
-  <tr><td>Employee Collection</td><td>Most companies use gmail and outlook. Also most employee emails are first.lastname@domain.com,firstname@domain.com, or lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td></tr>
-  <tr><td>Targeting</td><td>Can build a mind map on individuals, including prioritization of targeting.</td></tr>
+  <tr>
+    <td>LinkedIn</td>
+    <td>You can filter by company and it shows employees. It also shows people based on type of degree (allows you to profile targets). You can use a VPN and a dummy account.</td>
+  </tr>
+  <tr>
+    <td>Employee Collection</td>
+    <td>Most companies use Gmail and Outlook. Most employee emails are first.lastname@domain.com, firstname@domain.com, or lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn, you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td>
+  </tr>
+  <tr>
+    <td>Targeting</td>
+    <td>You can build a mind map on individuals, including prioritization of targeting.</td>
+  </tr>
 </table>
+
 
 ---
 
@@ -143,10 +153,10 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     <td>Phishing/Smishing</td>
     <td>
       <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a> -  
-      MFA becoming more popular and companies usually only give higher-ups phones. This means most employees use their personal phones.
+      MFA is becoming more popular, and companies usually only provide phones to higher‑level employees. As a result, most employees use their personal phones.
     </td>
     </tr>
-  <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extraced with 7-zip. CrowdStrike flags on using tar from windows due to lolbin</td></tr>
+  <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extraced with 7-zip. Falcon flags on using tar from windows due to lolbin</td></tr>
   <tr>
     <td>Excel</td>
     <td>
@@ -238,7 +248,7 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
 
   Loading a kernel driver requires Administrator privileges. As noted in this <a href="https://www.elastic.co/security-labs/forget-vulnerable-drivers-admin-is-all-you-need" target="_blank">Elastic blog post</a>, "Administrative processes and users are considered part of the Trusted Computing Base (TCB) for Windows and are therefore not strongly isolated from the kernel boundary." While this precedent contradicts foundational computer science and operating system principles, it reflects Microsoft's stance on the matter.
 
-  Numerous examples exist of using signed vulnerable drivers to disable EDR solutions, though most do not affect CrowdStrike. One such project is <a href="https://github.com/zer0condition/mhydeath?tab=readme-ov-file" target="_blank">MHYDEATH</a>, which loads a vulnerable signed driver and terminates the userland components of many EDR solutions. In CrowdStrike’s case, most functionality resides in `csagent.sys`, which will simply restart the userland component and trigger a high alert for Defense Evasion.
+  Numerous examples exist of using signed vulnerable drivers to disable EDR solutions, though most do not affect Falcon. One such project is <a href="https://github.com/zer0condition/mhydeath?tab=readme-ov-file" target="_blank">MHYDEATH</a>, which loads a vulnerable signed driver and terminates the userland components of many EDR solutions. In Falcon's case, most functionality resides in `csagent.sys`, which will simply restart the userland component and trigger a high alert for Defense Evasion.
 
   The `csagent.sys` driver is not registered like typical Windows kernel drivers and behaves much like a rootkit. Attempting to terminate it results in a BSOD, so the next best strategy is to neutralize its callbacks.  
 
@@ -340,9 +350,9 @@ A list of kernel callbacks can be found here.
 ## Persistence
 
 <table>
-  <tr><td>Startup Execution</td><td>upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag CrowdStrike.</td></tr>
+  <tr><td>Startup Execution</td><td>upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag Falcon.</td></tr>
   <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll, dbghelp.dll, and userenv.dll</td></tr>
-<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallback(Ex) kernel callback, and there's a good chance CrowdStrike flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
+<tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallbackEx kernel callback, and there's a good chance Falcon flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
 
 
@@ -361,9 +371,9 @@ A list of kernel callbacks can be found here.
  The tool performs keyboard hooking only when the user is focused on a Remote Desktop session, making it more stealthy than generic keyloggers that hook the keyboard continuously and record everything typed. However, it remains memory-intensive. 
 
 A tip for optimizing keyloggers is adding a millisecond delay at the end of each hooking procedure to reduce CPU usage. It's also best to store captured characters in in-memory buffers rather than writing to disk. Logging should occur over the current C2 session comms. This code would be best optimized and utilized as a BOF.</td></tr>
-<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard especially against CrowdStrike. But there are instances where having ntlm can be useful.
+<tr><td>LSASS Dumping</td><td><a href="https://github.com/wtechsec/LSASS-Forked-Dump---Bypass-EDR-CrowdStrike/tree/main">LSASS-Forked-Dump</a> – Overall, I am not a fan of LSASS dumping; I think it is an extreme opsec hazard especially against Falcon. But there are instances where having ntlm can be useful.
 
-I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals of forking and dumping from the non-main LSASS process is a good principle. I would also add that after doing the dump, you should overwrite the MDMP header and avoid saving it to disk. This is another example of code that should be implemented as a BOF file or .NET assembly that can be run in memory, with the dump directly transferred over the wire.</td></tr>
+I highly doubt the code in that link bypasses Falcon, but the fundamentals of forking and dumping from the non-main LSASS process is a good principle. I would also add that after doing the dump, you should overwrite the MDMP header and avoid saving it to disk. This is another example of code that should be implemented as a BOF file or .NET assembly that can be run in memory, with the dump directly transferred over the wire.</td></tr>
 </table>
 
 ---
@@ -376,7 +386,7 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
     <td>WMI</td>
     <td>
       <a href="https://github.com/XiaoliChan/wmiexec-Pro/tree/main" target="_blank">wmiexec-Pro GitHub</a>  
-      - WMI Event Subscriptions and `Win32_Process` are heavily monitored by CrowdStrike. This technique doesn't rely on `Win32_Process`. I will update in the future if it bypasses CrowdStrike.
+      - WMI Event Subscriptions and `Win32_Process` are heavily monitored by Falcon. This technique doesn't rely on `Win32_Process`. I will update in the future if it bypasses Falcon.
     </td>
   </tr>
   <tr>
@@ -402,7 +412,7 @@ I highly doubt the code in that link bypasses CrowdStrike, but the fundamentals 
     <td>BOF Kernel Exploit</td>
     <td>
       <a href="https://github.com/apkc/CVE-2024-26229-BOF/tree/main" target="_blank">BOF kernel exploit example</a> -   
-      Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe. CrowdStrike will receive ObRegisterCallback in the kernel and flag it as token access manipulation.
+      Overwriting the EPROCESS structure, specifically the token field with a SYSTEM token, is a common privilege escalation method; however, it is not considered OPSEC safe. Falcon will receive ObRegisterCallback in the kernel and flag it as token access manipulation.
     </td>
   </tr>
   <tr>
