@@ -446,7 +446,7 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
 
 ---
 
-## Exfilitration
+## Exfiltration
 
 <table>
   <tr>
