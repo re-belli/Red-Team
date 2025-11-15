@@ -1,15 +1,12 @@
-# Offensive Security Notes: Unredacted  
+# Offensive Security Notes: Unfiltered  
 **Be advised: hot takes ahead. All notes are based on my experiences and are opinions not facts.**
 **When I talk about OPSEC, it focuses around CrowdStrike. Most of my experience involves going against it. I plan to experiment more with MDE due to its easy integration with the Microsoft ecosystem.**
 
 
-## Guides 
-https://web.archive.org/web/20221126165225/https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html#enumeration
-https://kolegite.com/EE_library/books_and_lectures/%D0%9A%D0%B8%D0%B1%D0%B5%D1%80%D1%81%D0%B8%D0%B3%D1%83%D1%80%D0%BD%D0%BE%D1%81%D1%82/RTFM%20Red%20Team%20Field%20Manual%20v2%20--%20Ben%20Clark%20%26%20Nick%20Downer.pdf
+## Guide
 https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 
 - [OSINT](#osint)  
-- [External Recon](#external-recon)  
 - [Resource Development](#resource-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
@@ -43,29 +40,6 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 
 ---
 
-## External Recon
-
-<table>
-  <tr>
-    <td>Protocol Recon via Packet Grep</td>
-    <td>
-      <pre><code>sudo ngrep -i -d &lt;network interface&gt; 's.?a.?m.?b.?a.*[[:digit:]]' port 139
-smbclient -U '%' -N -L \\\\10.10.10.10\\</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Using Shodan to Retrieve Open Ports and Info</td>
-    <td>
-      <pre><code>nmap -sn -Pn -n --script=shodan-api --script-args 'shodan-api.apikey=XXXXXX' worldsworstwebsiteever.com</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Firewall Evasion</td>
-    <td>
-      <a href="https://github.com/kritikakatyal/Firewall-Evasion-Techniques-Analysis" target="_blank">Firewall Evasion Techniques</a>
-    </td>
-  </tr>
-</table>
 
 ## Resource Development
 
@@ -379,16 +353,26 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
   <tr>
     <td>WMI</td>
     <td>
-      <a href="https://github.com/XiaoliChan/wmiexec-Pro/tree/main" target="_blank">wmiexec-Pro GitHub</a>  
-      - WMI Event Subscriptions and `Win32_Process` are heavily monitored by Falcon. This technique doesn't rely on `Win32_Process`. I will update in the future if it bypasses Falcon.
+      <a href="https://github.com/XiaoliChan/wmiexec-Pro/tree/main" target="_blank">wmiexec-Pro GitHub</a><br>
+      - WMI Event Subscriptions and <code>Win32_Process</code> are heavily monitored by Falcon.  
+      This technique doesn't rely on <code>Win32_Process</code>. I will update in the future if it bypasses Falcon.
     </td>
   </tr>
   <tr>
     <td>WinRM</td>
     <td>
-      <a href="https://github.com/bohops/WSMan-WinRM" target="_blank">WSMan-WinRM GitHub</a>  
+      <a href="https://github.com/bohops/WSMan-WinRM" target="_blank">WSMan-WinRM GitHub</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Non-Opsec Technique</td>
+    <td>
+      <strong>NTLM Relay with ntlmrelayx.py</strong><br>
+      - Falcon has signatured internal code that makes registry changes to run remote commands.
+    </td>
   </tr>
 </table>
+
 
 
 ---
@@ -430,12 +414,6 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
     </td>
   </tr>
   <tr>
-    <td>Common AD Exploitation Techniques</td>
-    <td>
-      <a href="https://en.hackndo.com/" target="_blank">Hackndo Blog</a>
-    </td>
-  </tr>
-  <tr>
     <td>ADCS Exploitation Techniques</td>
     <td>
       <a href="https://hideandsec.sh/books/cheatsheets-82c/page/active-directory-certificate-services" target="_blank">ADCS Cheatsheet</a>
@@ -446,7 +424,7 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
 
 ---
 
-## Exfiltration
+## Exfilitration
 
 <table>
   <tr>
