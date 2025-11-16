@@ -291,7 +291,7 @@ A list of kernel callbacks can be found here.
   - A script to obfuscate `PowerUp.ps1`, helping evade static and signature-based detection by Windows Defender.
   <br><br>
   <a href="https://github.com/Trigleos/ELFREVGO.git" target="_blank">ELFREVGO</a>  
-  - A tool to obfuscate ELF binaries using custom code generation and function redirection to evade static analysis and signature-based detection on Linux systems.
+  - A anti-analysis tool that helps to obfuscate ELF files
   <br><code>ELFREVGO/bin/ELFREVGO -f test -e -t -n -gd execve -gf custom_logger -o testx</code>
   <br><br>
   <a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/discovery_suid_sguid_enumeration.toml" target="_blank">Elastic SUID rule</a>  
