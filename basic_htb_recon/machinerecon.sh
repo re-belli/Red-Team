@@ -103,7 +103,7 @@ msrpcFunc()
     then
         rpcPort=$(cat initial.txt | sed -r 's/\s+//g' | sed -n "/openmsrpc/p" | cut -d "/" -f 1 | sed -n 1p)
         mkdir -p msrpcResults
-        rpcclient -U "" -N ${args[0]} -c enumdomusers --port -p$rpcPort | tee "$currentDirectory/msrpcResults/enumDomUsers.txt"
+        rpcclient -U "" -N ${args[0]} -c enumdomusers --port $rpcPort | tee "$currentDirectory/msrpcResults/enumDomUsers.txt"
         msrpcAccess=$(sed -n 1p msrpcResults/enumDomUsers.txt | sed 's/.* //')
         if [[ $msrpcAccess != "NT_STATUS_ACCESS_DENIED" ]];
         then 
