@@ -291,7 +291,7 @@ A list of kernel callbacks can be found here.
   - A script to obfuscate `PowerUp.ps1`, helping evade static and signature-based detection by Windows Defender.
   <br><br>
   <a href="https://github.com/Trigleos/ELFREVGO.git" target="_blank">ELFREVGO</a>  
-  - A anti-analysis tool that helps to obfuscate ELF files
+  - A tool to obfuscate ELF binaries using custom code generation and function redirection to evade static analysis and signature-based detection on Linux systems.
   <br><code>ELFREVGO/bin/ELFREVGO -f test -e -t -n -gd execve -gf custom_logger -o testx</code>
   <br><br>
   <a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/discovery_suid_sguid_enumeration.toml" target="_blank">Elastic SUID rule</a>  
@@ -318,7 +318,7 @@ A list of kernel callbacks can be found here.
 ## Persistence
 
 <table>
-  <tr><td>Startup Execution</td><td>upload .lnk to "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag Falcon.</td></tr>
+  <tr><td>Startup Execution</td><td>upload .lnk to "C:\Users\user\AppData\Roaming\Microsoft\Windows\StartM~1\Programs\Startup\" via C2 and point it to your loader. The file creation would be seen by a MiniFilter driver, but that alone won't flag Falcon.</td></tr>
   <tr><td>DLL Sideloading</td><td>Teams, VS Code, and OneDrive are vulnerable to DLL sideloading via version.dll, dbghelp.dll, and userenv.dll</td></tr>
 <tr><td>Non-Opsec Techniques</td><td> Registry modifications trigger the CmRegisterCallbackEx kernel callback, and there's a good chance Falcon flags it. WMI event subscriptions used to be stealthy, but many APTs (including APT29) have abused them, and they are now monitored more aggressively. [Google Threat Intelligence – APT29 abuse](https://cloud.google.com/blog/topics/threat-intelligence/dissecting-one-ofap)</td></tr>
 </table>
@@ -424,7 +424,7 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
 
 ---
 
-## Exfilitration
+## Exfiltration
 
 <table>
   <tr>
