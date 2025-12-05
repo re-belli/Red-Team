@@ -394,13 +394,6 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
     </td>
   </tr>
   <tr>
-    <td>UAC Bypass</td>
-    <td>
-      <a href="https://github.com/sexyiam/UAC-Bypass/tree/main" target="_blank">UAC-Bypass</a>  
-      - Many companies still have user accounts that are local administrators for their Windows endpoints. 
-    </td>
-  </tr>
-  <tr>
     <td>SeImpersonation</td>
     <td>
       <a href="https://github.com/tylerdotrar/SigmaPotato" target="_blank">SigmaPotato</a>  
