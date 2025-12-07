@@ -71,13 +71,6 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 ## Initial Access
 
 <table>
-    <tr>
-    <td>Phishing/Smishing</td>
-    <td>
-      <a href="https://medium.com/sud0root/mastering-modern-red-teaming-infrastructure-part-7-advanced-phishing-techniques-for-2fa-bypass-85f9adc4dc3b" target="_blank">Medium: Advanced Phishing Techniques for 2FA Bypass</a> -  
-      MFA is becoming more popular, and companies usually only provide phones to higher‑level employees. As a result, most employees use their personal phones.
-    </td>
-    </tr>
   <tr><td>MOTW bypass</td><td>tar.gz bypasses motw and can be extracted with 7-zip. Falcon flags on using tar from windows due to lolbin</td></tr>
   <tr>
     <td>Excel</td>
