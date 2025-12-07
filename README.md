@@ -6,7 +6,6 @@
 ## Guide
 https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 
-- [OSINT](#osint)  
 - [Resource Development](#resource-development)  
 - [Initial Access](#initial-access)  
 - [Execution](#execution)  
@@ -19,27 +18,6 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
 - [Exfiltration](#exfiltration)  
 
 ---
-
-## OSINT
-
-<table>
-  <tr>
-    <td>LinkedIn</td>
-    <td>You can filter by company and it shows employees. It also shows people based on type of degree (allows you to profile targets). You can use a VPN and a dummy account.</td>
-  </tr>
-  <tr>
-    <td>Employee Collection</td>
-    <td>Most companies use Gmail and Outlook. Most employee emails are first.lastname@domain.com, firstname@domain.com, or lastname-first_initial-second_initial@domain.com. Even if you get preferred names from LinkedIn, you can use sites like TruePeopleSearch to get full names, phone numbers, and addresses. You can also use IDCrawl to find social media accounts.</td>
-  </tr>
-  <tr>
-    <td>Targeting</td>
-    <td>You can build a mind map on individuals, including prioritization of targeting.</td>
-  </tr>
-</table>
-
-
----
-
 
 ## Resource Development
 
