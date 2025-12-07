@@ -331,7 +331,7 @@ I highly doubt the code in that link bypasses Falcon, but the fundamentals of fo
     <td>
       <a href="https://github.com/XiaoliChan/wmiexec-Pro/tree/main" target="_blank">wmiexec-Pro GitHub</a><br>
       - WMI Event Subscriptions and <code>Win32_Process</code> are heavily monitored by Falcon.  
-      This technique doesn't rely on <code>Win32_Process</code>. I will update in the future if it bypasses Falcon.
+      This technique doesn't rely on <code>Win32_Process</code>.
     </td>
   </tr>
   <tr>
