@@ -47,7 +47,7 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
   <tr>
     <td>Compile C++ with cl.exe</td>
     <td>
-      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /EHs- /GR- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text /MERGE:.data=.text</code></pre>
+      <pre><code>cl.exe /nologo /MT /Ox /W0 /GS- /DNDEBUG /Tp bubble_sort.cpp /link kernel32.lib /OUT:bubble_sort.exe /SUBSYSTEM:WINDOWS /MACHINE:x64 /ENTRY:WinMain /NODEFAULTLIB /MERGE:.rdata=.text /MERGE:.pdata=.text</code></pre>
     </td>
   </tr>
   <tr>
@@ -57,33 +57,9 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
     </td>
   </tr>
   <tr>
-    <td>Compile C# with csc.exe</td>
-    <td>
-      <pre><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /optimize+ /debug- .\data_recovery.cs</code></pre>
-    </td>
-  </tr>
-  <tr>
     <td>Compile C# with Roslyn Compiler</td>
     <td>
       <pre><code>& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe" /optimize+ /unsafe /debug- .\program.cs .\Structs.cs</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Publish .NET Application</td>
-    <td>
-      <pre><code>dotnet publish -c Release -r win-x64 --self-contained /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Convert COM Type Library to .NET Assembly</td>
-    <td>
-      <pre><code>tlbimp C:\Windows\System32\wsmauto.dll /out:WSManAutomation.dll</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td>Add Reference to .NET Project</td>
-    <td>
-      <pre><code>dotnet add reference WSManAutomation.dll</code></pre>
     </td>
   </tr>
   <tr>
