@@ -147,7 +147,7 @@ https://paper.bobylive.com/Security/The_Red_Team_Guide_by_Peerlyst_community.pdf
   <tr>
     <td>Routers</td>
     <td>
-      Will fill in, but popping these is how nation-states get in.
+       <a href="https://github.com/threat9/routersploit/tree/master" target="_blank">routersploit</a>
     </td>
     </tr>
     <tr>
